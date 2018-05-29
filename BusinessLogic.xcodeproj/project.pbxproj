@@ -19,6 +19,8 @@
 		0760054520BDCD050006CCF8 /* PDPViewStateFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0760054420BDCD050006CCF8 /* PDPViewStateFactory.swift */; };
 		0760054720BDCFCB0006CCF8 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0760054620BDCFCB0006CCF8 /* Types.swift */; };
 		0760054B20BE18E40006CCF8 /* ShippingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0760054A20BE18E40006CCF8 /* ShippingService.swift */; };
+		07F821B920BE1CE900EF9B74 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F821B820BE1CE900EF9B74 /* Product.swift */; };
+		07F821BF20BE1DD100EF9B74 /* ShippingInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F821BE20BE1DD100EF9B74 /* ShippingInfo.swift */; };
 		77E048787879E795B6B37E00 /* Pods_BusinessLogic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B16406B025275CA567C99632 /* Pods_BusinessLogic.framework */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +60,8 @@
 		0760054420BDCD050006CCF8 /* PDPViewStateFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDPViewStateFactory.swift; sourceTree = "<group>"; };
 		0760054620BDCFCB0006CCF8 /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
 		0760054A20BE18E40006CCF8 /* ShippingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShippingService.swift; sourceTree = "<group>"; };
+		07F821B820BE1CE900EF9B74 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
+		07F821BE20BE1DD100EF9B74 /* ShippingInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShippingInfo.swift; sourceTree = "<group>"; };
 		B13A78379B2C6148576B7729 /* Pods-BusinessLogic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BusinessLogic.release.xcconfig"; path = "Pods/Target Support Files/Pods-BusinessLogic/Pods-BusinessLogic.release.xcconfig"; sourceTree = "<group>"; };
 		B16406B025275CA567C99632 /* Pods_BusinessLogic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BusinessLogic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B20F459D1CD73D1E4A20C4CB /* Pods-BusinessLogic.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BusinessLogic.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BusinessLogic/Pods-BusinessLogic.debug.xcconfig"; sourceTree = "<group>"; };
@@ -114,8 +118,9 @@
 		0760051120BDC0980006CCF8 /* BusinessLogic */ = {
 			isa = PBXGroup;
 			children = (
-				0760054920BE18D50006CCF8 /* ShippingService */,
-				0760054820BDCFE50006CCF8 /* PDP */,
+				07F821BC20BE1D9400EF9B74 /* Business */,
+				07F821BB20BE1D4E00EF9B74 /* Module */,
+				07F821BA20BE1D2E00EF9B74 /* Service */,
 				0760051220BDC0980006CCF8 /* AppDelegate.swift */,
 				0760051420BDC0980006CCF8 /* ViewController.swift */,
 				0760051620BDC0980006CCF8 /* Main.storyboard */,
@@ -150,7 +155,6 @@
 				0760054020BDC2BB0006CCF8 /* PDPBusinessLogic.swift */,
 				0760054220BDC4590006CCF8 /* PDPCommandAndControl.swift */,
 				0760054420BDCD050006CCF8 /* PDPViewStateFactory.swift */,
-				0760054620BDCFCB0006CCF8 /* Types.swift */,
 			);
 			path = PDP;
 			sourceTree = "<group>";
@@ -161,6 +165,48 @@
 				0760054A20BE18E40006CCF8 /* ShippingService.swift */,
 			);
 			path = ShippingService;
+			sourceTree = "<group>";
+		};
+		07F821B720BE1CDB00EF9B74 /* Product */ = {
+			isa = PBXGroup;
+			children = (
+				07F821B820BE1CE900EF9B74 /* Product.swift */,
+			);
+			path = Product;
+			sourceTree = "<group>";
+		};
+		07F821BA20BE1D2E00EF9B74 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				0760054920BE18D50006CCF8 /* ShippingService */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		07F821BB20BE1D4E00EF9B74 /* Module */ = {
+			isa = PBXGroup;
+			children = (
+				0760054820BDCFE50006CCF8 /* PDP */,
+			);
+			path = Module;
+			sourceTree = "<group>";
+		};
+		07F821BC20BE1D9400EF9B74 /* Business */ = {
+			isa = PBXGroup;
+			children = (
+				07F821BD20BE1DC000EF9B74 /* ShippingInfo */,
+				07F821B720BE1CDB00EF9B74 /* Product */,
+				0760054620BDCFCB0006CCF8 /* Types.swift */,
+			);
+			path = Business;
+			sourceTree = "<group>";
+		};
+		07F821BD20BE1DC000EF9B74 /* ShippingInfo */ = {
+			isa = PBXGroup;
+			children = (
+				07F821BE20BE1DD100EF9B74 /* ShippingInfo.swift */,
+			);
+			path = ShippingInfo;
 			sourceTree = "<group>";
 		};
 		5D1E6B4F3991A3D0DC3353A5 /* Frameworks */ = {
@@ -355,12 +401,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				0760054320BDC4590006CCF8 /* PDPCommandAndControl.swift in Sources */,
+				07F821B920BE1CE900EF9B74 /* Product.swift in Sources */,
 				0760054520BDCD050006CCF8 /* PDPViewStateFactory.swift in Sources */,
 				0760054B20BE18E40006CCF8 /* ShippingService.swift in Sources */,
 				0760051520BDC0980006CCF8 /* ViewController.swift in Sources */,
 				0760054720BDCFCB0006CCF8 /* Types.swift in Sources */,
 				0760054120BDC2BB0006CCF8 /* PDPBusinessLogic.swift in Sources */,
 				0760051320BDC0980006CCF8 /* AppDelegate.swift in Sources */,
+				07F821BF20BE1DD100EF9B74 /* ShippingInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

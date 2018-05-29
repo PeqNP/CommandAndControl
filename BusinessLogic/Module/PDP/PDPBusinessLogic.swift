@@ -4,76 +4,14 @@
 
 import Foundation
 
-struct Product {
-    let id: ProductID
-    let name: String
-    let price: NormalPrice
-    let skus: [SKU]
-}
-
-struct SKUColor {
-    let name: String
-    let imageURL: URL?
-}
-
-struct SKUSize {
-    let name: String
-    let metaDescription: String
-}
-
-enum Price {
-    case regular(Double)
-    case sale(was: Double, now: Double)
-}
-
-enum NormalPrice {
-    case single(Price)
-    case range(from: Price, to: Price)
-}
-
-struct SKU {
-    let id: SKUID
-    let color: SKUColor
-    let size: SKUSize
-    let price: Price
-}
-
-enum OptionalSKU {
+enum Mutable<T> {
     case `nil`
-    case set(SKU?)
+    case set(T?)
     
-    func value(from previous: SKU?) -> SKU? {
+    func value(from current: T?) -> T? {
         switch self {
         case .nil:
-            return previous
-        case .set(let value):
-            return value
-        }
-    }
-}
-
-enum OptionalSKUColor {
-    case `nil`
-    case set(SKUColor?)
-    
-    func value(from previous: SKUColor?) -> SKUColor? {
-        switch self {
-        case .nil:
-            return previous
-        case .set(let value):
-            return value
-        }
-    }
-}
-
-enum OptionalSKUSize {
-    case `nil`
-    case set(SKUSize?)
-    
-    func value(from previous: SKUSize?) -> SKUSize? {
-        switch self {
-        case .nil:
-            return previous
+            return current
         case .set(let value):
             return value
         }
@@ -90,7 +28,7 @@ struct PDPState {
     let selectedSize: SKUSize?
     let selectedSKU: SKU?
     
-    func make(selectedColor: OptionalSKUColor = .nil, selectedSize: OptionalSKUSize = .nil, selectedSKU: OptionalSKU = .nil) -> PDPState {
+    func make(selectedColor: Mutable<SKUColor> = .nil, selectedSize: Mutable<SKUSize> = .nil, selectedSKU: Mutable<SKU> = .nil) -> PDPState {
         return PDPState(
             productID: self.productID,
             productName: self.productName,

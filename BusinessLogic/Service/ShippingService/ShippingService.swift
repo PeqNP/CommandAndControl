@@ -9,10 +9,6 @@ enum ShippingServiceError: Error {
     case generic
 }
 
-struct ShippingInfo {
-    
-}
-
 class ShippingService {
     
     func shippingInformationFor(productID: ProductID) -> Future<ShippingInfo, ShippingServiceError> {
