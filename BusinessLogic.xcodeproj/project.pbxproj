@@ -14,6 +14,12 @@
 		0760051D20BDC09D0006CCF8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0760051B20BDC09D0006CCF8 /* LaunchScreen.storyboard */; };
 		0760052820BDC09D0006CCF8 /* BusinessLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0760052720BDC09D0006CCF8 /* BusinessLogicTests.swift */; };
 		0760053320BDC09D0006CCF8 /* BusinessLogicUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0760053220BDC09D0006CCF8 /* BusinessLogicUITests.swift */; };
+		0760054120BDC2BB0006CCF8 /* PDPBusinessLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0760054020BDC2BB0006CCF8 /* PDPBusinessLogic.swift */; };
+		0760054320BDC4590006CCF8 /* PDPCommandAndControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0760054220BDC4590006CCF8 /* PDPCommandAndControl.swift */; };
+		0760054520BDCD050006CCF8 /* PDPViewStateFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0760054420BDCD050006CCF8 /* PDPViewStateFactory.swift */; };
+		0760054720BDCFCB0006CCF8 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0760054620BDCFCB0006CCF8 /* Types.swift */; };
+		0760054B20BE18E40006CCF8 /* ShippingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0760054A20BE18E40006CCF8 /* ShippingService.swift */; };
+		77E048787879E795B6B37E00 /* Pods_BusinessLogic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B16406B025275CA567C99632 /* Pods_BusinessLogic.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +53,14 @@
 		0760052E20BDC09D0006CCF8 /* BusinessLogicUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BusinessLogicUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0760053220BDC09D0006CCF8 /* BusinessLogicUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessLogicUITests.swift; sourceTree = "<group>"; };
 		0760053420BDC09D0006CCF8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0760054020BDC2BB0006CCF8 /* PDPBusinessLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDPBusinessLogic.swift; sourceTree = "<group>"; };
+		0760054220BDC4590006CCF8 /* PDPCommandAndControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDPCommandAndControl.swift; sourceTree = "<group>"; };
+		0760054420BDCD050006CCF8 /* PDPViewStateFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDPViewStateFactory.swift; sourceTree = "<group>"; };
+		0760054620BDCFCB0006CCF8 /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
+		0760054A20BE18E40006CCF8 /* ShippingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShippingService.swift; sourceTree = "<group>"; };
+		B13A78379B2C6148576B7729 /* Pods-BusinessLogic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BusinessLogic.release.xcconfig"; path = "Pods/Target Support Files/Pods-BusinessLogic/Pods-BusinessLogic.release.xcconfig"; sourceTree = "<group>"; };
+		B16406B025275CA567C99632 /* Pods_BusinessLogic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BusinessLogic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B20F459D1CD73D1E4A20C4CB /* Pods-BusinessLogic.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BusinessLogic.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BusinessLogic/Pods-BusinessLogic.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77E048787879E795B6B37E00 /* Pods_BusinessLogic.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +96,8 @@
 				0760052620BDC09D0006CCF8 /* BusinessLogicTests */,
 				0760053120BDC09D0006CCF8 /* BusinessLogicUITests */,
 				0760051020BDC0980006CCF8 /* Products */,
+				C19154E968C4BBB026F1BD80 /* Pods */,
+				5D1E6B4F3991A3D0DC3353A5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -97,6 +114,8 @@
 		0760051120BDC0980006CCF8 /* BusinessLogic */ = {
 			isa = PBXGroup;
 			children = (
+				0760054920BE18D50006CCF8 /* ShippingService */,
+				0760054820BDCFE50006CCF8 /* PDP */,
 				0760051220BDC0980006CCF8 /* AppDelegate.swift */,
 				0760051420BDC0980006CCF8 /* ViewController.swift */,
 				0760051620BDC0980006CCF8 /* Main.storyboard */,
@@ -125,6 +144,42 @@
 			path = BusinessLogicUITests;
 			sourceTree = "<group>";
 		};
+		0760054820BDCFE50006CCF8 /* PDP */ = {
+			isa = PBXGroup;
+			children = (
+				0760054020BDC2BB0006CCF8 /* PDPBusinessLogic.swift */,
+				0760054220BDC4590006CCF8 /* PDPCommandAndControl.swift */,
+				0760054420BDCD050006CCF8 /* PDPViewStateFactory.swift */,
+				0760054620BDCFCB0006CCF8 /* Types.swift */,
+			);
+			path = PDP;
+			sourceTree = "<group>";
+		};
+		0760054920BE18D50006CCF8 /* ShippingService */ = {
+			isa = PBXGroup;
+			children = (
+				0760054A20BE18E40006CCF8 /* ShippingService.swift */,
+			);
+			path = ShippingService;
+			sourceTree = "<group>";
+		};
+		5D1E6B4F3991A3D0DC3353A5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B16406B025275CA567C99632 /* Pods_BusinessLogic.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C19154E968C4BBB026F1BD80 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B20F459D1CD73D1E4A20C4CB /* Pods-BusinessLogic.debug.xcconfig */,
+				B13A78379B2C6148576B7729 /* Pods-BusinessLogic.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -132,9 +187,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0760053720BDC09D0006CCF8 /* Build configuration list for PBXNativeTarget "BusinessLogic" */;
 			buildPhases = (
+				54EB3383AB22170CC7A2DC1F /* [CP] Check Pods Manifest.lock */,
 				0760050B20BDC0980006CCF8 /* Sources */,
 				0760050C20BDC0980006CCF8 /* Frameworks */,
 				0760050D20BDC0980006CCF8 /* Resources */,
+				17A038E719930C278744FC25 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -251,12 +308,58 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		17A038E719930C278744FC25 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-BusinessLogic/Pods-BusinessLogic-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/BrightFutures/BrightFutures.framework",
+				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BrightFutures.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BusinessLogic/Pods-BusinessLogic-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		54EB3383AB22170CC7A2DC1F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BusinessLogic-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		0760050B20BDC0980006CCF8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0760054320BDC4590006CCF8 /* PDPCommandAndControl.swift in Sources */,
+				0760054520BDCD050006CCF8 /* PDPViewStateFactory.swift in Sources */,
+				0760054B20BE18E40006CCF8 /* ShippingService.swift in Sources */,
 				0760051520BDC0980006CCF8 /* ViewController.swift in Sources */,
+				0760054720BDCFCB0006CCF8 /* Types.swift in Sources */,
+				0760054120BDC2BB0006CCF8 /* PDPBusinessLogic.swift in Sources */,
 				0760051320BDC0980006CCF8 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -428,6 +531,7 @@
 		};
 		0760053820BDC09D0006CCF8 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B20F459D1CD73D1E4A20C4CB /* Pods-BusinessLogic.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -446,6 +550,7 @@
 		};
 		0760053920BDC09D0006CCF8 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B13A78379B2C6148576B7729 /* Pods-BusinessLogic.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
