@@ -13,7 +13,6 @@
 		0760051A20BDC09D0006CCF8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0760051920BDC09D0006CCF8 /* Assets.xcassets */; };
 		0760051D20BDC09D0006CCF8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0760051B20BDC09D0006CCF8 /* LaunchScreen.storyboard */; };
 		0760052820BDC09D0006CCF8 /* BusinessLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0760052720BDC09D0006CCF8 /* BusinessLogicTests.swift */; };
-		0760053320BDC09D0006CCF8 /* BusinessLogicUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0760053220BDC09D0006CCF8 /* BusinessLogicUITests.swift */; };
 		0760054120BDC2BB0006CCF8 /* PDPBusinessLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0760054020BDC2BB0006CCF8 /* PDPBusinessLogic.swift */; };
 		0760054320BDC4590006CCF8 /* PDPCommandAndControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0760054220BDC4590006CCF8 /* PDPCommandAndControl.swift */; };
 		0760054520BDCD050006CCF8 /* PDPViewStateFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0760054420BDCD050006CCF8 /* PDPViewStateFactory.swift */; };
@@ -26,13 +25,6 @@
 
 /* Begin PBXContainerItemProxy section */
 		0760052420BDC09D0006CCF8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0760050720BDC0980006CCF8 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 0760050E20BDC0980006CCF8;
-			remoteInfo = BusinessLogic;
-		};
-		0760052F20BDC09D0006CCF8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0760050720BDC0980006CCF8 /* Project object */;
 			proxyType = 1;
@@ -52,7 +44,6 @@
 		0760052320BDC09D0006CCF8 /* BusinessLogicTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BusinessLogicTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0760052720BDC09D0006CCF8 /* BusinessLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessLogicTests.swift; sourceTree = "<group>"; };
 		0760052920BDC09D0006CCF8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0760052E20BDC09D0006CCF8 /* BusinessLogicUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BusinessLogicUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0760053220BDC09D0006CCF8 /* BusinessLogicUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessLogicUITests.swift; sourceTree = "<group>"; };
 		0760053420BDC09D0006CCF8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0760054020BDC2BB0006CCF8 /* PDPBusinessLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDPBusinessLogic.swift; sourceTree = "<group>"; };
@@ -83,13 +74,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		0760052B20BDC09D0006CCF8 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -110,7 +94,6 @@
 			children = (
 				0760050F20BDC0980006CCF8 /* BusinessLogic.app */,
 				0760052320BDC09D0006CCF8 /* BusinessLogicTests.xctest */,
-				0760052E20BDC09D0006CCF8 /* BusinessLogicUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -266,24 +249,6 @@
 			productReference = 0760052320BDC09D0006CCF8 /* BusinessLogicTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		0760052D20BDC09D0006CCF8 /* BusinessLogicUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 0760053D20BDC09D0006CCF8 /* Build configuration list for PBXNativeTarget "BusinessLogicUITests" */;
-			buildPhases = (
-				0760052A20BDC09D0006CCF8 /* Sources */,
-				0760052B20BDC09D0006CCF8 /* Frameworks */,
-				0760052C20BDC09D0006CCF8 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				0760053020BDC09D0006CCF8 /* PBXTargetDependency */,
-			);
-			name = BusinessLogicUITests;
-			productName = BusinessLogicUITests;
-			productReference = 0760052E20BDC09D0006CCF8 /* BusinessLogicUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -298,10 +263,6 @@
 						CreatedOnToolsVersion = 9.3.1;
 					};
 					0760052220BDC09D0006CCF8 = {
-						CreatedOnToolsVersion = 9.3.1;
-						TestTargetID = 0760050E20BDC0980006CCF8;
-					};
-					0760052D20BDC09D0006CCF8 = {
 						CreatedOnToolsVersion = 9.3.1;
 						TestTargetID = 0760050E20BDC0980006CCF8;
 					};
@@ -322,7 +283,6 @@
 			targets = (
 				0760050E20BDC0980006CCF8 /* BusinessLogic */,
 				0760052220BDC09D0006CCF8 /* BusinessLogicTests */,
-				0760052D20BDC09D0006CCF8 /* BusinessLogicUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -339,13 +299,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		0760052120BDC09D0006CCF8 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		0760052C20BDC09D0006CCF8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -420,14 +373,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		0760052A20BDC09D0006CCF8 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				0760053320BDC09D0006CCF8 /* BusinessLogicUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -435,11 +380,6 @@
 			isa = PBXTargetDependency;
 			target = 0760050E20BDC0980006CCF8 /* BusinessLogic */;
 			targetProxy = 0760052420BDC09D0006CCF8 /* PBXContainerItemProxy */;
-		};
-		0760053020BDC09D0006CCF8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 0760050E20BDC0980006CCF8 /* BusinessLogic */;
-			targetProxy = 0760052F20BDC09D0006CCF8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -657,46 +597,6 @@
 			};
 			name = Release;
 		};
-		0760053E20BDC09D0006CCF8 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = DSZ2DNDVRK;
-				INFOPLIST_FILE = BusinessLogicUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.upstartillustration.BusinessLogicUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = BusinessLogic;
-			};
-			name = Debug;
-		};
-		0760053F20BDC09D0006CCF8 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = DSZ2DNDVRK;
-				INFOPLIST_FILE = BusinessLogicUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.upstartillustration.BusinessLogicUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = BusinessLogic;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -723,15 +623,6 @@
 			buildConfigurations = (
 				0760053B20BDC09D0006CCF8 /* Debug */,
 				0760053C20BDC09D0006CCF8 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		0760053D20BDC09D0006CCF8 /* Build configuration list for PBXNativeTarget "BusinessLogicUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				0760053E20BDC09D0006CCF8 /* Debug */,
-				0760053F20BDC09D0006CCF8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
