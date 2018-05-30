@@ -23,9 +23,13 @@ struct PDPViewState {
     let selectedSKU: SKUViewState?
 }
 
+struct ShippingInfoViewState {
+    
+}
+
 class PDPViewStateFactory {
     
-    func makeFromState(_ state: PDPState) -> PDPViewState {
+    func makePDPViewStateFrom(state: PDPState) -> PDPViewState {
         return PDPViewState(
             productName: state.productName,
             skuColors: [],
@@ -34,5 +38,9 @@ class PDPViewStateFactory {
             selectedSKUSize: nil,
             selectedSKU: nil
         )
+    }
+    
+    func makeShippingInfoViewStateFrom(shippingInfo: ShippingInfo) -> ShippingInfoViewState {
+        return ShippingInfoViewState()
     }
 }

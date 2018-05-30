@@ -23,8 +23,17 @@ extension ViewController: PDPCommandAndControlDelegate {
     
     func command(_ action: PDPCommand) {
         switch action {
+        case .showLoadingIndicator:
+            // Show loading indicator
+            return
+        case .hideLoadingIndicator:
+            // Hide loading indicator
+            return
         case .updated(let viewState):
             // Update the view
+            return
+        case .showShippingInfo(let viewState):
+            // Show the shipping information for a SKU
             return
         case .showMoreInfo:
             // Show the 'More Information' dialog
@@ -34,6 +43,9 @@ extension ViewController: PDPCommandAndControlDelegate {
             return
         case .routeToPDPFor(let productID):
             // Route to the PDP for `productID`
+            return
+        case .showError(let error):
+            // Display error
             return
         }
     }

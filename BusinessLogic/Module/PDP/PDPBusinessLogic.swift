@@ -24,6 +24,8 @@ struct PDPState {
     let price: NormalPrice
     let skus: [SKU]
     
+    // Consider putting `isLoading: Bool` and other view state information in here. This will greatly reduce the number of delegate cases that the kitchen needs to send. Does it make it easier on the view controller though? Could also be that the kitchen still has the cases, and the state has the view information (such as loading), to reduce complexity in the view controller.
+    
     let selectedColor: SKUColor?
     let selectedSize: SKUSize?
     let selectedSKU: SKU?
