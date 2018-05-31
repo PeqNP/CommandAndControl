@@ -2,6 +2,7 @@
  Copyright © 2018 Upstart Illustration LLC. All rights reserved.
  */
 
+import BrightFutures
 import Foundation
 
 enum PDPCommand {
@@ -21,9 +22,12 @@ protocol PDPCommandAndControlDelegate: class {
 
 class PDPCommandAndControl {
     
-    let shippingService: ShippingService
-    let businessLogic: PDPBusinessLogic
-    let factory: PDPViewStateFactory
+    private let queue: EventQueue = EventQueue()
+    
+    private let shippingService: ShippingService
+    private let businessLogic: PDPBusinessLogic
+    private let factory: PDPViewStateFactory
+
     weak var delegate: PDPCommandAndControlDelegate?
     
     init(shippingService: ShippingService, businessLogic: PDPBusinessLogic, factory: PDPViewStateFactory) {
@@ -58,8 +62,21 @@ class PDPCommandAndControl {
     }
     
     func requestedShippingInformation() {
+        queue
+            .add(showLoadingIndicator)
+            .add(loadShippingInformation)
+            .add(hideLoadingIndicator)
+            .execute()
+    }
+    
+    // MARK: - Actions
+    
+    func showLoadingIndicator() {
         delegate?.command(.showLoadingIndicator)
-        shippingService.shippingInformationFor(productID: businessLogic.productID)
+    }
+    
+    func loadShippingInformation() -> QueueableFuture {
+        return shippingService.shippingInformationFor(productID: businessLogic.productID)
             .onSuccess { [weak self] (shippingInfo) in
                 guard let strongSelf = self else {
                     return
@@ -70,8 +87,59 @@ class PDPCommandAndControl {
             .onFailure { [weak self] (error) in
                 self?.delegate?.command(.showError(error))
             }
-            .onComplete { [weak self] _ in
-                self?.delegate?.command(.hideLoadingIndicator)
+            .makeQueueable()
+    }
+    
+    func hideLoadingIndicator() {
+        delegate?.command(.hideLoadingIndicator)
+    }
+}
+
+struct IgnoreError: Error { }
+
+typealias QueueableFuture = Future<Void, IgnoreError>
+
+class EventQueue {
+    typealias SyncCallback = () -> ()
+    typealias FutureCallback = () -> QueueableFuture?
+    
+    private var queue: [Any] = [Any]()
+    
+    func add(_ sync: SyncCallback) -> EventQueue {
+        queue.append(sync)
+        return self
+    }
+    
+    func add(_ async: FutureCallback) -> EventQueue {
+        queue.append(async)
+        return self
+    }
+    
+    func execute() {
+        while queue.count > 0 {
+            let nextCallback = queue.removeFirst()
+            
+            if let callback = nextCallback as? SyncCallback {
+                callback()
             }
+            else if let callback = nextCallback as? FutureCallback {
+                callback()?.onComplete { [weak self] _ in
+                    self?.execute()
+                }
+                break
+            }
+        }
+    }
+}
+
+extension Future {
+    
+    func makeQueueable() -> QueueableFuture {
+        return self.map { _ -> Void in
+            return Void()
+        }
+        .mapError { _ -> IgnoreError in
+            return IgnoreError()
+        }
     }
 }
