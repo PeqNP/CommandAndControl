@@ -18,6 +18,8 @@
 		0760054520BDCD050006CCF8 /* PDPViewStateFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0760054420BDCD050006CCF8 /* PDPViewStateFactory.swift */; };
 		0760054720BDCFCB0006CCF8 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0760054620BDCFCB0006CCF8 /* Types.swift */; };
 		0760054B20BE18E40006CCF8 /* ShippingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0760054A20BE18E40006CCF8 /* ShippingService.swift */; };
+		079C478920C0B3480040B9DC /* BagService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079C478820C0B3480040B9DC /* BagService.swift */; };
+		079C478B20C0B36C0040B9DC /* IgnorableResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079C478A20C0B36C0040B9DC /* IgnorableResult.swift */; };
 		07F821B920BE1CE900EF9B74 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F821B820BE1CE900EF9B74 /* Product.swift */; };
 		07F821BF20BE1DD100EF9B74 /* ShippingInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F821BE20BE1DD100EF9B74 /* ShippingInfo.swift */; };
 		77E048787879E795B6B37E00 /* Pods_BusinessLogic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B16406B025275CA567C99632 /* Pods_BusinessLogic.framework */; };
@@ -51,6 +53,8 @@
 		0760054420BDCD050006CCF8 /* PDPViewStateFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDPViewStateFactory.swift; sourceTree = "<group>"; };
 		0760054620BDCFCB0006CCF8 /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
 		0760054A20BE18E40006CCF8 /* ShippingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShippingService.swift; sourceTree = "<group>"; };
+		079C478820C0B3480040B9DC /* BagService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BagService.swift; sourceTree = "<group>"; };
+		079C478A20C0B36C0040B9DC /* IgnorableResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnorableResult.swift; sourceTree = "<group>"; };
 		07F821B820BE1CE900EF9B74 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		07F821BE20BE1DD100EF9B74 /* ShippingInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShippingInfo.swift; sourceTree = "<group>"; };
 		B13A78379B2C6148576B7729 /* Pods-BusinessLogic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BusinessLogic.release.xcconfig"; path = "Pods/Target Support Files/Pods-BusinessLogic/Pods-BusinessLogic.release.xcconfig"; sourceTree = "<group>"; };
@@ -150,6 +154,14 @@
 			path = ShippingService;
 			sourceTree = "<group>";
 		};
+		079C478720C0B3350040B9DC /* BagService */ = {
+			isa = PBXGroup;
+			children = (
+				079C478820C0B3480040B9DC /* BagService.swift */,
+			);
+			path = BagService;
+			sourceTree = "<group>";
+		};
 		07F821B720BE1CDB00EF9B74 /* Product */ = {
 			isa = PBXGroup;
 			children = (
@@ -161,7 +173,9 @@
 		07F821BA20BE1D2E00EF9B74 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				079C478720C0B3350040B9DC /* BagService */,
 				0760054920BE18D50006CCF8 /* ShippingService */,
+				079C478A20C0B36C0040B9DC /* IgnorableResult.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -356,9 +370,11 @@
 				0760054320BDC4590006CCF8 /* PDPCommandAndControl.swift in Sources */,
 				07F821B920BE1CE900EF9B74 /* Product.swift in Sources */,
 				0760054520BDCD050006CCF8 /* PDPViewStateFactory.swift in Sources */,
+				079C478B20C0B36C0040B9DC /* IgnorableResult.swift in Sources */,
 				0760054B20BE18E40006CCF8 /* ShippingService.swift in Sources */,
 				0760051520BDC0980006CCF8 /* ViewController.swift in Sources */,
 				0760054720BDCFCB0006CCF8 /* Types.swift in Sources */,
+				079C478920C0B3480040B9DC /* BagService.swift in Sources */,
 				0760054120BDC2BB0006CCF8 /* PDPBusinessLogic.swift in Sources */,
 				0760051320BDC0980006CCF8 /* AppDelegate.swift in Sources */,
 				07F821BF20BE1DD100EF9B74 /* ShippingInfo.swift in Sources */,

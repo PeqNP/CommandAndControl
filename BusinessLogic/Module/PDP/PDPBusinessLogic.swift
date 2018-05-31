@@ -52,6 +52,10 @@ class PDPBusinessLogic {
         return previousState.productID
     }
     
+    var selectedSKUID: SKUID? {
+        return previousState.selectedSKU?.id
+    }
+    
     init(initialState: PDPState) {
         self.previousState = initialState
     }
@@ -66,6 +70,18 @@ class PDPBusinessLogic {
             selectedSize: nil,
             selectedSKU: nil
         )
+    }
+    
+    func addSKUToBag() -> PDPState {
+        return previousState
+    }
+    
+    func addedSKUToBag() -> PDPState {
+        return previousState
+    }
+    
+    func failedToAddSKUToBag() -> PDPState {
+        return previousState
     }
     
     func selectSKUColor(_ color: SKUColor) -> PDPState {

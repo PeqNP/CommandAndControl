@@ -24,13 +24,14 @@ class PDPCommandAndControl {
     
     private let queue: EventQueue = EventQueue()
     
+    private let bagService: BagService
     private let shippingService: ShippingService
     private let businessLogic: PDPBusinessLogic
     private let factory: PDPViewStateFactory
 
     weak var delegate: PDPCommandAndControlDelegate?
     
-    init(shippingService: ShippingService, businessLogic: PDPBusinessLogic, factory: PDPViewStateFactory) {
+    init(bagService: BagService, shippingService: ShippingService, businessLogic: PDPBusinessLogic, factory: PDPViewStateFactory) {
         self.shippingService = shippingService
         self.businessLogic = businessLogic
         self.factory = factory
@@ -40,7 +41,6 @@ class PDPCommandAndControl {
         let state = businessLogic.selectSKUSize(size)
         let viewState = factory.makePDPViewStateFrom(state: state)
         delegate?.command(.updated(viewState))
-        
     }
     
     func selectedSKUColor(_ color: SKUColor) {
@@ -69,13 +69,25 @@ class PDPCommandAndControl {
             .execute()
     }
     
+    func addToBag() {
+        queue
+            .add(showLoadingIndicator)
+            .add(addItemToBag)
+            .add(hideLoadingIndicator)
+            .execute()
+    }
+    
     // MARK: - Actions
     
     func showLoadingIndicator() {
         delegate?.command(.showLoadingIndicator)
     }
     
-    func loadShippingInformation() -> QueueableFuture {
+    func hideLoadingIndicator() {
+        delegate?.command(.hideLoadingIndicator)
+    }
+
+    func loadShippingInformation() -> QueueableFuture? {
         return shippingService.shippingInformationFor(productID: businessLogic.productID)
             .onSuccess { [weak self] (shippingInfo) in
                 guard let strongSelf = self else {
@@ -90,8 +102,23 @@ class PDPCommandAndControl {
             .makeQueueable()
     }
     
-    func hideLoadingIndicator() {
-        delegate?.command(.hideLoadingIndicator)
+    func addItemToBag() -> QueueableFuture? {
+        guard let skuID = businessLogic.selectedSKUID else {
+            return nil
+        }
+        let state = businessLogic.addSKUToBag()
+        let viewState = factory.makePDPViewStateFrom(state: state)
+        delegate?.command(.updated(viewState))
+        return bagService.addToBag(skuID: skuID)
+            .onSuccess { [weak self] _ in
+                guard let strongSelf = self else {
+                    return
+                }
+                let state = strongSelf.businessLogic.addedSKUToBag()
+                let viewState = strongSelf.factory.makePDPViewStateFrom(state: state)
+                strongSelf.delegate?.command(.updated(viewState))
+            }
+            .makeQueueable()
     }
 }
 
