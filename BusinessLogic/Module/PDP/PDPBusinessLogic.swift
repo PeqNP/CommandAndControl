@@ -149,7 +149,6 @@ class PDPBusinessLogic {
         state = state.make(amountToAddToBag: amount)
         return .success(state)
     }
-
     
     func addSKUToBag(_ callback: @escaping PDPBusinessLogicStatusCallback) throws {
         guard .adding != state.addToBagState else {

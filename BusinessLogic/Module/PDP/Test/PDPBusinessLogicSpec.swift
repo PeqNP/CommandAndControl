@@ -32,17 +32,19 @@ class PDPBusinessLogicSpec: QuickSpec {
                     expect(subject.productID).to(equal(product.id))
                 }
                 
-                it("should set immutable properties correctly") {
-                    expect(subject.state.productName).to(equal(product.name))
-                    expect(subject.state.price).to(equal(product.price))
-                    expect(subject.state.skus).to(equal(product.skus))
-                }
-                
-                it("should have set the correct default values for mutable values") {
-                    expect(subject.state.amountToAddToBag).to(equal(1))
-                    expect(subject.state.selectedColor).to(beNil())
-                    expect(subject.state.selectedSize).to(beNil())
-                    expect(subject.state.selectedSKU).to(beNil())
+                it("should set the initial state correctly") {
+                    let expectedState = PDPState(
+                        productID: product.id,
+                        productName: product.name,
+                        price: product.price,
+                        skus: product.skus,
+                        amountToAddToBag: 1,
+                        addToBagState: .add,
+                        selectedColor: nil,
+                        selectedSize: nil,
+                        selectedSKU: nil
+                    )
+                    expect(subject.state).to(equal(expectedState))
                 }
             }
             
@@ -50,15 +52,30 @@ class PDPBusinessLogicSpec: QuickSpec {
                 var state: PDPBusinessLogicState!
                 var expectedState: PDPBusinessLogicState!
                 
-                beforeEach {
-                    product = Product.testMake(id: 1)
-                    subject = PDPBusinessLogic(bagService: bagService, product: product)
-                    expectedState = .success(subject.state.make(amountToAddToBag: 2))
-                    state = subject.addOneMoreToPurchase()
+                context("when adding one more within limit") {
+                    beforeEach {
+                        product = Product.testMake(id: 1)
+                        subject = PDPBusinessLogic(bagService: bagService, product: product)
+                        expectedState = .success(subject.state.make(amountToAddToBag: 2))
+                        state = subject.addOneMoreToPurchase()
+                    }
+                    
+                    it("should have added one more to the bag") {
+                        expect(state).to(equal(expectedState))
+                    }
                 }
                 
-                it("should have added one more to the bag") {
-                    expect(state).to(equal(expectedState))
+                context("when adding one more than is allowed") {
+                    beforeEach {
+                        product = Product.testMake(id: 1)
+                        subject = PDPBusinessLogic(bagService: bagService, state: PDPState.testMake(amountToAddToBag: 99))
+                        state = subject.addOneMoreToPurchase()
+                    }
+                    
+                    it("should have added one more to the bag") {
+                        expectedState = .error(.exceededAmountThatCanBeAddedToBag)
+                        expect(state).to(equal(expectedState))
+                    }
                 }
             }
         }
