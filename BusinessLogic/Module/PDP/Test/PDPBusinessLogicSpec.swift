@@ -16,13 +16,15 @@ class PDPBusinessLogicSpec: QuickSpec {
         describe("Given a PDPBusinessLogic") {
             var subject: PDPBusinessLogic!
             var bagService: FakeBagService!
-            
+            var product: Product!
+
+            beforeEach {
+                bagService = FakeBagService()
+            }
+        
             describe("default values") {
-                var product: Product!
-                
                 beforeEach {
                     product = Product.testMake(id: 1)
-                    bagService = FakeBagService()
                     subject = PDPBusinessLogic(bagService: bagService, product: product)
                 }
                 
@@ -42,7 +44,22 @@ class PDPBusinessLogicSpec: QuickSpec {
                     expect(subject.state.selectedSize).to(beNil())
                     expect(subject.state.selectedSKU).to(beNil())
                 }
+            }
+            
+            describe("increasing the amount to purchase") {
+                var state: PDPBusinessLogicState!
+                var expectedState: PDPBusinessLogicState!
                 
+                beforeEach {
+                    product = Product.testMake(id: 1)
+                    subject = PDPBusinessLogic(bagService: bagService, product: product)
+                    expectedState = .success(subject.state.make(amountToAddToBag: 2))
+                    state = subject.addOneMoreToPurchase()
+                }
+                
+                it("should have added one more to the bag") {
+                    expect(state).to(equal(expectedState))
+                }
             }
         }
     }
