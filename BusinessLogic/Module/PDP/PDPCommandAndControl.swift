@@ -15,6 +15,19 @@ enum PDPCommand {
     case showError(Error)
 }
 
+enum PDPEvent {
+    case configure(Product)
+    case viewDidLoad
+    case selectedSKUSize(SKUSize)
+    case selectedSKUColor(SKUColor)
+    case tappedMoreInfoButton
+    case tappedCarouselImage
+    case tappedRecommendedProduct(ProductID)
+    case requestedShippingInformation
+    case amountChanged(Int)
+    case addToBagTapped
+}
+
 protocol PDPCommandAndControlDelegate: class {
     func command(_ action: PDPCommand)
 }
@@ -22,46 +35,79 @@ protocol PDPCommandAndControlDelegate: class {
 class PDPCommandAndControl {
     
     private let queue: EventQueue = EventQueue()
-    
-    private let bagService: BagService
+    private var businessLogic: PDPBusinessLogic!
+
     private let shippingService: ShippingService
-    private let businessLogic: PDPBusinessLogic
+    private let businessLogicFactory: PDPBusinessLogicFactory
     private let factory: PDPViewStateFactory
 
     weak var delegate: PDPCommandAndControlDelegate?
     
-    init(bagService: BagService, shippingService: ShippingService, businessLogic: PDPBusinessLogic, factory: PDPViewStateFactory) {
-        self.bagService = bagService
+    init(shippingService: ShippingService, businessLogicFactory: PDPBusinessLogicFactory, factory: PDPViewStateFactory) {
         self.shippingService = shippingService
-        self.businessLogic = businessLogic
+        self.businessLogicFactory = businessLogicFactory
         self.factory = factory
     }
     
-    // MARK: - Public Methods
+    // MARK: - Internal Methods
     
-    func selectedSKUSize(_ size: SKUSize) {
+    func receive(_ event: PDPEvent) {
+        switch event {
+        case .configure(let product):
+            businessLogic = businessLogicFactory.makeWithProduct(product)
+        case .viewDidLoad:
+            break
+        case .selectedSKUSize(let size):
+            selectedSKUSize(size)
+        case .selectedSKUColor(let color):
+            selectedSKUColor(color)
+        case .tappedMoreInfoButton:
+            tappedMoreInfoButton()
+        case .tappedCarouselImage:
+            tappedCarouselImage()
+        case .tappedRecommendedProduct(let productID):
+            tappedRecommendedProduct(productID)
+        case .requestedShippingInformation:
+            requestedShippingInformation()
+        case .amountChanged(let amount):
+            amountChanged(amount)
+        case .addToBagTapped:
+            addToBagTapped()
+        }
+    }
+    
+    // MARK: - Private Methods
+
+    // MARK: Events
+    
+    private func selectedSKUSize(_ size: SKUSize) {
         let state = businessLogic.selectSKUSize(size)
         update(with: state)
     }
     
-    func selectedSKUColor(_ color: SKUColor) {
+    private func selectedSKUColor(_ color: SKUColor) {
         let state = businessLogic.selectSKUColor(color)
         update(with: state)
     }
     
-    func tappedMoreInfoButton() {
+    private func tappedMoreInfoButton() {
         delegate?.command(.showMoreInfo)
     }
     
-    func tappedCarouselImage() {
+    private func tappedCarouselImage() {
         delegate?.command(.showImageGallery)
     }
     
-    func tappedRecommendedProduct(_ productID: ProductID) {
+    private func tappedRecommendedProduct(_ productID: ProductID) {
         delegate?.command(.routeToPDPFor(productID))
     }
     
-    func requestedShippingInformation() {
+    /**
+     Request shipping information on-demand.
+     
+     This shows how you can chain several `PDPCommand`s together.
+     */
+    private func requestedShippingInformation() {
         queue
             .add(showLoadingIndicator)
             .add(loadShippingInformation)
@@ -69,22 +115,25 @@ class PDPCommandAndControl {
             .execute()
     }
     
-    func amountChanged(_ amount: Int) {
+    private func amountChanged(_ amount: Int) {
         let state = businessLogic.updateAmountToPurchaseTo(amount)
         update(with: state)
     }
     
-    func addToBagTapped() {
+    /**
+     Adds the selected SKU to the bag with the requested amount.
+     
+     This shows how you can chain several `PDPCommand`s together using a `EventQueue.JobFinishedCallback`.
+     */
+    private func addToBagTapped() {
         queue
-            .add(showLoadingIndicator)
-            .add(addItemToBag)
-            .add(hideLoadingIndicator)
+            .add(addSKUToBag)
             .execute()
     }
     
-    // TODO: Add a feature where the `BusinessLogic` determines if the user should be routed.
+    // MARK: Helpers
     
-    // MARK: - Private Methods
+    // TODO: Add a feature where the `BusinessLogic` determines if the user should be routed.
     
     private func showLoadingIndicator() {
         delegate?.command(.showLoadingIndicator)
@@ -94,6 +143,11 @@ class PDPCommandAndControl {
         delegate?.command(.hideLoadingIndicator)
     }
 
+    /**
+     Load shipping information for a product on-demand.
+ 
+     This method shows how an event unrelated to the main `PDPState` can be handled. You could potentially have a `ShippingInfoBusinessLogic` but that's unnecessary as the operation is so simple.
+     */
     private func loadShippingInformation() -> QueueableFuture? {
         return shippingService.shippingInformationFor(productID: businessLogic.productID)
             .onSuccess { [weak self] (shippingInfo) in
@@ -105,34 +159,25 @@ class PDPCommandAndControl {
             .makeQueueable()
     }
     
-    private func addItemToBag() -> QueueableFuture? {
-        guard let skuID = businessLogic.selectedSKUID else {
-            return nil
+    /**
+     Add the selected SKU to the shopper's bag.
+     
+     This method shows how an asynchronous event can be handled by the `BusinessLogic` using a `EventQueue.JobFinishedCallback`.
+     
+     Some asynchronous events can only be executed one at a time. In this case the `BusinessLogic` throws an exception if `addSKUToBag` is called if a previous operation is still in progress.
+     */
+    private func addSKUToBag(_ callback: @escaping JobFinishedCallback) {
+        do {
+            try businessLogic.addSKUToBag { [weak self] (status, state) in
+                self?.update(with: state)
+                if case .complete = status {
+                    callback()
+                }
+            }
         }
-        startAddingSKUToBag()
-        return bagService.addToBag(skuID: skuID)
-            .onSuccess { [weak self] _ in
-                self?.finishAddingSKUToBag()
-            }
-            .onFailure { [weak self] _ in
-                self?.failedToAddSKUToBag()
-            }
-            .makeQueueable()
-    }
-    
-    private func startAddingSKUToBag() {
-        let state = businessLogic.addSKUToBag()
-        update(with: state)
-    }
-    
-    private func finishAddingSKUToBag() {
-        let state = businessLogic.addedSKUToBag()
-        update(with: state)
-    }
-    
-    private func failedToAddSKUToBag() {
-        let state = businessLogic.failedToAddSKUToBag()
-        update(with: state)
+        catch {
+            callback()
+        }
     }
     
     private func showShippingInfo(_ shippingInfo: ShippingInfo) {
@@ -140,6 +185,11 @@ class PDPCommandAndControl {
         delegate?.command(.showShippingInfo(viewState))
     }
     
+    /**
+     Show an error.
+     
+     The `Error` in this context is purposely generic as it can handle `Error`s from `Service`s, `BusinessLogic`, or any other dependency.
+     */
     private func showError(_ error: Error) {
         delegate?.command(.showError(error))
     }
@@ -150,7 +200,7 @@ class PDPCommandAndControl {
             let viewState = factory.makePDPViewStateFrom(state: pdpState)
             delegate?.command(.update(viewState))
         case .error(let error):
-            delegate?.command(.showError(error))
+            showError(error)
         }
     }
 }

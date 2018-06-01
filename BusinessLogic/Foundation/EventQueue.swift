@@ -8,20 +8,27 @@ import Foundation
 struct IgnoreError: Error { }
 
 typealias QueueableFuture = Future<Void, IgnoreError>
+typealias JobFinishedCallback = () -> ()
 
 class EventQueue {
     typealias SyncCallback = () -> ()
+    typealias AsyncCallback = (@escaping JobFinishedCallback) -> ()
     typealias FutureCallback = () -> QueueableFuture?
     
     private var queue: [Any] = [Any]()
     
-    func add(_ sync: SyncCallback) -> EventQueue {
-        queue.append(sync)
+    func add(_ callback: SyncCallback) -> EventQueue {
+        queue.append(callback)
         return self
     }
     
-    func add(_ async: FutureCallback) -> EventQueue {
-        queue.append(async)
+    func add(_ callback: FutureCallback) -> EventQueue {
+        queue.append(callback)
+        return self
+    }
+    
+    func add(_ callback: AsyncCallback) -> EventQueue {
+        queue.append(callback)
         return self
     }
     
@@ -37,6 +44,11 @@ class EventQueue {
                     self?.execute()
                 }
                 break
+            }
+            else if let callback = nextCallback as? AsyncCallback {
+                callback { [weak self] in
+                    self?.execute()
+                }
             }
         }
     }
