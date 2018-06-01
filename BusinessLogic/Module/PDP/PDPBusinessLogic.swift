@@ -64,6 +64,8 @@ enum PDPBusinessLogicState {
 // NOTE: Could be made generic/abstract
 enum PDPBusinessLogicStatus {
     case inProgress
+    // The above case could also look something like this:
+    // `case inProgress(amountComplete: Double)`
     case complete
 }
 
