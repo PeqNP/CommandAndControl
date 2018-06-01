@@ -21,7 +21,6 @@
 		0760051820BDC0980006CCF8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0760051620BDC0980006CCF8 /* Main.storyboard */; };
 		0760051A20BDC09D0006CCF8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0760051920BDC09D0006CCF8 /* Assets.xcassets */; };
 		0760051D20BDC09D0006CCF8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0760051B20BDC09D0006CCF8 /* LaunchScreen.storyboard */; };
-		0760052820BDC09D0006CCF8 /* BusinessLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0760052720BDC09D0006CCF8 /* BusinessLogicTests.swift */; };
 		0760054120BDC2BB0006CCF8 /* PDPBusinessLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0760054020BDC2BB0006CCF8 /* PDPBusinessLogic.swift */; };
 		0760054320BDC4590006CCF8 /* PDPCommandAndControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0760054220BDC4590006CCF8 /* PDPCommandAndControl.swift */; };
 		0760054520BDCD050006CCF8 /* PDPViewStateFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0760054420BDCD050006CCF8 /* PDPViewStateFactory.swift */; };
@@ -63,7 +62,6 @@
 		0760051C20BDC09D0006CCF8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0760051E20BDC09D0006CCF8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0760052320BDC09D0006CCF8 /* BusinessLogicTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BusinessLogicTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		0760052720BDC09D0006CCF8 /* BusinessLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessLogicTests.swift; sourceTree = "<group>"; };
 		0760052920BDC09D0006CCF8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0760053220BDC09D0006CCF8 /* BusinessLogicUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessLogicUITests.swift; sourceTree = "<group>"; };
 		0760053420BDC09D0006CCF8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -181,7 +179,6 @@
 			children = (
 				074F3D3320C1AC2F00784754 /* Fake */,
 				074F3D3020C1AB8B00784754 /* TestHelper */,
-				0760052720BDC09D0006CCF8 /* BusinessLogicTests.swift */,
 				0760052920BDC09D0006CCF8 /* Info.plist */,
 			);
 			path = BusinessLogicTests;
@@ -514,7 +511,6 @@
 				074F3D2F20C1A99A00784754 /* PDPBusinessLogicSpec.swift in Sources */,
 				074F3D3520C1AC3F00784754 /* FakeBagService.swift in Sources */,
 				074F3D3220C1AB9C00784754 /* Product+TestHelper.swift in Sources */,
-				0760052820BDC09D0006CCF8 /* BusinessLogicTests.swift in Sources */,
 				074F3D3D20C1B0CC00784754 /* PDPBusinessLogic+TestHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -67,7 +67,6 @@ class PDPBusinessLogicSpec: QuickSpec {
                 
                 context("when adding one more than is allowed") {
                     beforeEach {
-                        product = Product.testMake(id: 1)
                         subject = PDPBusinessLogic(bagService: bagService, state: PDPState.testMake(amountToAddToBag: 99))
                         state = subject.addOneMoreToPurchase()
                     }
