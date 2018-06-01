@@ -126,10 +126,16 @@ class PDPBusinessLogic {
         self.state = state
     }
     
-    func updateAmountToPurchaseTo(_ amount: Int) -> PDPBusinessLogicState {
+    func addOneMoreToPurchase() -> PDPBusinessLogicState {
         // Check the amount adding 0-99, return amount that is allowed
         return .success(state)
     }
+    
+    func removeOneFromPurchase() -> PDPBusinessLogicState {
+        // Check the amount adding 0-99, return amount that is allowed
+        return .success(state)
+    }
+
     
     func addSKUToBag(_ callback: @escaping PDPBusinessLogicStatusCallback) throws {
         guard .adding != state.addToBagState else {

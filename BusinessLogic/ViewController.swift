@@ -6,6 +6,19 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet private weak var amountLabel: UIView!
+    
+    @IBAction func addOneTapped(_ sender: Any) {
+        control.receive(.addOneTapped)
+    }
+    
+    @IBAction func removeOneTapped(_ sender: Any) {
+        control.receive(.removeOneTapped)
+    }
+    
+    @IBAction func addToBagTapped(_ sender: Any) {
+    }
+    
     private var control: PDPCommandAndControl!
     
     func inject(control: PDPCommandAndControl) {
@@ -14,8 +27,13 @@ class ViewController: UIViewController {
         control.delegate = self
     }
     
+    func configure(product: Product) {
+        control.receive(.configure(product))
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+//        control.receive(.viewDidLoad)
     }
 }
 

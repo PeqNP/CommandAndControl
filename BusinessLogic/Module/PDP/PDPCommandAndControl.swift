@@ -29,7 +29,8 @@ enum PDPEvent {
     case tappedCarouselImage
     case tappedRecommendedProduct(ProductID)
     case requestedShippingInformation
-    case amountChanged(Int)
+    case addOneTapped
+    case removeOneTapped
     case addToBagTapped
 }
 
@@ -74,8 +75,10 @@ class PDPCommandAndControl {
             tappedRecommendedProduct(productID)
         case .requestedShippingInformation:
             requestedShippingInformation()
-        case .amountChanged(let amount):
-            amountChanged(amount)
+        case .addOneTapped:
+            addOneTapped()
+        case .removeOneTapped:
+            removeOneTapped()
         case .addToBagTapped:
             addToBagTapped()
         }
@@ -120,8 +123,13 @@ class PDPCommandAndControl {
             .execute()
     }
     
-    private func amountChanged(_ amount: Int) {
-        let state = businessLogic.updateAmountToPurchaseTo(amount)
+    private func addOneTapped() {
+        let state = businessLogic.addOneMoreToPurchase()
+        update(with: state)
+    }
+    
+    private func removeOneTapped() {
+        let state = businessLogic.removeOneFromPurchase()
         update(with: state)
     }
     
