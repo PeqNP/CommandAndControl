@@ -1,4 +1,9 @@
 /**
+ Provides the Command & Control service for the Product Page (PDP).
+ 
+ NOTES:
+ When looking through the code, notice how each method performs a single operation (single responsibility). This was a pattern that was discovered after 1. the business logic was moved out of the C&C and into the BL 2. the necessity to clearly describe a set of discrete operations that must take place in a given sequence with the help of the `EventQueue`.
+ 
  Copyright © 2018 Upstart Illustration LLC. All rights reserved.
  */
 
