@@ -16,6 +16,7 @@ struct SKUViewState {
 
 struct PDPViewState {
     let productName: String
+    let amountToAddToBag: String
     let skuColors: [SKUColorViewState]
     let skuSizes: [SKUSizeViewState]
     let selectedSKUColor: SKUColorViewState?
@@ -32,6 +33,7 @@ class PDPViewStateFactory {
     func makePDPViewStateFrom(state: PDPState) -> PDPViewState {
         return PDPViewState(
             productName: state.productName,
+            amountToAddToBag: String(state.amountToAddToBag),
             skuColors: [],
             skuSizes: [],
             selectedSKUColor: nil,

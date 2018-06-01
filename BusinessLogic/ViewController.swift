@@ -6,7 +6,7 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    @IBOutlet private weak var amountLabel: UIView!
+    @IBOutlet private weak var amountLabel: UILabel!
     
     @IBAction func addOneTapped(_ sender: Any) {
         control.receive(.addOneTapped)
@@ -36,6 +36,10 @@ class ViewController: UIViewController {
         super.viewDidLoad()
 //        control.receive(.viewDidLoad)
     }
+    
+    private func update(_ viewState: PDPViewState) {
+        amountLabel.text = viewState.amountToAddToBag
+    }
 }
 
 extension ViewController: PDPCommandAndControlDelegate {
@@ -49,6 +53,7 @@ extension ViewController: PDPCommandAndControlDelegate {
             // Hide loading indicator
             return
         case .update(let viewState):
+            update(viewState)
             // Update the view
             return
         case .showShippingInfo(let viewState):

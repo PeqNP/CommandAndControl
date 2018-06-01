@@ -27,18 +27,20 @@ struct PDPState {
     let skus: [SKU]
     
     // Mutable
+    let amountToAddToBag: Int
     let addToBagState: AddToBagState
     let selectedColor: SKUColor?
     let selectedSize: SKUSize?
     let selectedSKU: SKU?
     
-    func make(addToBagState: AddToBagState? = nil, selectedColor: Mutable<SKUColor> = .nil, selectedSize: Mutable<SKUSize> = .nil, selectedSKU: Mutable<SKU> = .nil) -> PDPState {
+    func make(amountToAddToBag: Int? = nil, addToBagState: AddToBagState? = nil, selectedColor: Mutable<SKUColor> = .nil, selectedSize: Mutable<SKUSize> = .nil, selectedSKU: Mutable<SKU> = .nil) -> PDPState {
         return PDPState(
             productID: self.productID,
             productName: self.productName,
             price: self.price,
             skus: self.skus,
             
+            amountToAddToBag: amountToAddToBag ?? self.amountToAddToBag,
             addToBagState: addToBagState ?? self.addToBagState,
             selectedColor: selectedColor.value(from: self.selectedColor),
             selectedSize: selectedSize.value(from: self.selectedSize),
@@ -53,6 +55,7 @@ enum PDPBusinessLogicError: Error {
     case skuIsNotSelected
     case failedToAddSKUToBag
     case operationInProgress
+    case exceededAmountThatCanBeAddedToBag
 }
 
 // NOTE: Could be made generic
@@ -114,6 +117,7 @@ class PDPBusinessLogic {
             productName: product.name,
             price: product.price,
             skus: product.skus,
+            amountToAddToBag: 1,
             addToBagState: .add,
             selectedColor: nil,
             selectedSize: nil,
@@ -127,12 +131,22 @@ class PDPBusinessLogic {
     }
     
     func addOneMoreToPurchase() -> PDPBusinessLogicState {
-        // Check the amount adding 0-99, return amount that is allowed
+        let amount = state.amountToAddToBag + 1
+        guard amount < 100 else {
+            return .error(.exceededAmountThatCanBeAddedToBag)
+        }
+        
+        state = state.make(amountToAddToBag: amount)
         return .success(state)
     }
     
     func removeOneFromPurchase() -> PDPBusinessLogicState {
-        // Check the amount adding 0-99, return amount that is allowed
+        let amount = state.amountToAddToBag - 1
+        guard amount > 0 else {
+            return .success(state)
+        }
+        
+        state = state.make(amountToAddToBag: amount)
         return .success(state)
     }
 
