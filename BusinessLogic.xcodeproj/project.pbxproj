@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		074F3D2A20C0C67900784754 /* Mutable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074F3D2920C0C67900784754 /* Mutable.swift */; };
 		074F3D2C20C0C6AC00784754 /* EventQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074F3D2B20C0C6AC00784754 /* EventQueue.swift */; };
+		074F3D2F20C1A99A00784754 /* PDPBusinessLogicSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074F3D2E20C1A99A00784754 /* PDPBusinessLogicSpec.swift */; };
 		0760051320BDC0980006CCF8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0760051220BDC0980006CCF8 /* AppDelegate.swift */; };
 		0760051520BDC0980006CCF8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0760051420BDC0980006CCF8 /* ViewController.swift */; };
 		0760051820BDC0980006CCF8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0760051620BDC0980006CCF8 /* Main.storyboard */; };
@@ -20,6 +21,7 @@
 		0760054520BDCD050006CCF8 /* PDPViewStateFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0760054420BDCD050006CCF8 /* PDPViewStateFactory.swift */; };
 		0760054720BDCFCB0006CCF8 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0760054620BDCFCB0006CCF8 /* Types.swift */; };
 		0760054B20BE18E40006CCF8 /* ShippingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0760054A20BE18E40006CCF8 /* ShippingService.swift */; };
+		07951D6010667EEFC110E0A3 /* Pods_BusinessLogicTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4659C84CD58ACC8EF037371 /* Pods_BusinessLogicTests.framework */; };
 		079C478920C0B3480040B9DC /* BagService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079C478820C0B3480040B9DC /* BagService.swift */; };
 		079C478B20C0B36C0040B9DC /* IgnorableResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079C478A20C0B36C0040B9DC /* IgnorableResult.swift */; };
 		07F821B920BE1CE900EF9B74 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F821B820BE1CE900EF9B74 /* Product.swift */; };
@@ -40,6 +42,7 @@
 /* Begin PBXFileReference section */
 		074F3D2920C0C67900784754 /* Mutable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mutable.swift; sourceTree = "<group>"; };
 		074F3D2B20C0C6AC00784754 /* EventQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventQueue.swift; sourceTree = "<group>"; };
+		074F3D2E20C1A99A00784754 /* PDPBusinessLogicSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDPBusinessLogicSpec.swift; sourceTree = "<group>"; };
 		0760050F20BDC0980006CCF8 /* BusinessLogic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BusinessLogic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0760051220BDC0980006CCF8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0760051420BDC0980006CCF8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -61,9 +64,12 @@
 		079C478A20C0B36C0040B9DC /* IgnorableResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnorableResult.swift; sourceTree = "<group>"; };
 		07F821B820BE1CE900EF9B74 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		07F821BE20BE1DD100EF9B74 /* ShippingInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShippingInfo.swift; sourceTree = "<group>"; };
+		347A4B6EDCB487667B2B5615 /* Pods-BusinessLogicTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BusinessLogicTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BusinessLogicTests/Pods-BusinessLogicTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B13A78379B2C6148576B7729 /* Pods-BusinessLogic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BusinessLogic.release.xcconfig"; path = "Pods/Target Support Files/Pods-BusinessLogic/Pods-BusinessLogic.release.xcconfig"; sourceTree = "<group>"; };
 		B16406B025275CA567C99632 /* Pods_BusinessLogic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BusinessLogic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B20F459D1CD73D1E4A20C4CB /* Pods-BusinessLogic.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BusinessLogic.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BusinessLogic/Pods-BusinessLogic.debug.xcconfig"; sourceTree = "<group>"; };
+		C615CCC01780E542AEB3EC9F /* Pods-BusinessLogicTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BusinessLogicTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BusinessLogicTests/Pods-BusinessLogicTests.release.xcconfig"; sourceTree = "<group>"; };
+		D4659C84CD58ACC8EF037371 /* Pods_BusinessLogicTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BusinessLogicTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +85,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07951D6010667EEFC110E0A3 /* Pods_BusinessLogicTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,6 +99,14 @@
 				074F3D2B20C0C6AC00784754 /* EventQueue.swift */,
 			);
 			path = Foundation;
+			sourceTree = "<group>";
+		};
+		074F3D2D20C1A98800784754 /* Test */ = {
+			isa = PBXGroup;
+			children = (
+				074F3D2E20C1A99A00784754 /* PDPBusinessLogicSpec.swift */,
+			);
+			path = Test;
 			sourceTree = "<group>";
 		};
 		0760050620BDC0980006CCF8 = {
@@ -150,6 +165,7 @@
 		0760054820BDCFE50006CCF8 /* PDP */ = {
 			isa = PBXGroup;
 			children = (
+				074F3D2D20C1A98800784754 /* Test */,
 				0760054020BDC2BB0006CCF8 /* PDPBusinessLogic.swift */,
 				0760054220BDC4590006CCF8 /* PDPCommandAndControl.swift */,
 				0760054420BDCD050006CCF8 /* PDPViewStateFactory.swift */,
@@ -224,6 +240,7 @@
 			isa = PBXGroup;
 			children = (
 				B16406B025275CA567C99632 /* Pods_BusinessLogic.framework */,
+				D4659C84CD58ACC8EF037371 /* Pods_BusinessLogicTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -233,6 +250,8 @@
 			children = (
 				B20F459D1CD73D1E4A20C4CB /* Pods-BusinessLogic.debug.xcconfig */,
 				B13A78379B2C6148576B7729 /* Pods-BusinessLogic.release.xcconfig */,
+				347A4B6EDCB487667B2B5615 /* Pods-BusinessLogicTests.debug.xcconfig */,
+				C615CCC01780E542AEB3EC9F /* Pods-BusinessLogicTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -263,9 +282,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0760053A20BDC09D0006CCF8 /* Build configuration list for PBXNativeTarget "BusinessLogicTests" */;
 			buildPhases = (
+				A78259D3A48C5D7CDCDA569A /* [CP] Check Pods Manifest.lock */,
 				0760051F20BDC09D0006CCF8 /* Sources */,
 				0760052020BDC09D0006CCF8 /* Frameworks */,
 				0760052120BDC09D0006CCF8 /* Resources */,
+				594F9AAD8326216304E1033D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -345,11 +366,13 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-BusinessLogic/Pods-BusinessLogic-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/BrightFutures/BrightFutures.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
+				"${BUILT_PRODUCTS_DIR}/Swinject/Swinject.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BrightFutures.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Swinject.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -368,6 +391,52 @@
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-BusinessLogic-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		594F9AAD8326216304E1033D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-BusinessLogicTests/Pods-BusinessLogicTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AutoEquatable/AutoEquatable.framework",
+				"${BUILT_PRODUCTS_DIR}/KIF/KIF.framework",
+				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
+				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
+				"${BUILT_PRODUCTS_DIR}/Spry/Spry.framework",
+				"${BUILT_PRODUCTS_DIR}/Spry+Nimble/Spry_Nimble.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AutoEquatable.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KIF.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Spry.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Spry_Nimble.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BusinessLogicTests/Pods-BusinessLogicTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A78259D3A48C5D7CDCDA569A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BusinessLogicTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -401,6 +470,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				074F3D2F20C1A99A00784754 /* PDPBusinessLogicSpec.swift in Sources */,
 				0760052820BDC09D0006CCF8 /* BusinessLogicTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -589,8 +659,8 @@
 		};
 		0760053B20BDC09D0006CCF8 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 347A4B6EDCB487667B2B5615 /* Pods-BusinessLogicTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DSZ2DNDVRK;
@@ -610,8 +680,8 @@
 		};
 		0760053C20BDC09D0006CCF8 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C615CCC01780E542AEB3EC9F /* Pods-BusinessLogicTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DSZ2DNDVRK;
