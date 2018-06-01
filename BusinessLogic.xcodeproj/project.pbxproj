@@ -118,10 +118,7 @@
 		0760051120BDC0980006CCF8 /* BusinessLogic */ = {
 			isa = PBXGroup;
 			children = (
-				074F3D2820C0C66C00784754 /* Foundation */,
-				07F821BC20BE1D9400EF9B74 /* Business */,
 				07F821BB20BE1D4E00EF9B74 /* Module */,
-				07F821BA20BE1D2E00EF9B74 /* Service */,
 				0760051220BDC0980006CCF8 /* AppDelegate.swift */,
 				0760051420BDC0980006CCF8 /* ViewController.swift */,
 				0760051620BDC0980006CCF8 /* Main.storyboard */,
@@ -197,7 +194,10 @@
 		07F821BB20BE1D4E00EF9B74 /* Module */ = {
 			isa = PBXGroup;
 			children = (
+				07F821BC20BE1D9400EF9B74 /* Business */,
+				074F3D2820C0C66C00784754 /* Foundation */,
 				0760054820BDCFE50006CCF8 /* PDP */,
+				07F821BA20BE1D2E00EF9B74 /* Service */,
 			);
 			path = Module;
 			sourceTree = "<group>";

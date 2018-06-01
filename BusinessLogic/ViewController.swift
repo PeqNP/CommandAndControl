@@ -17,6 +17,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func addToBagTapped(_ sender: Any) {
+        control.receive(.addToBagTapped)
     }
     
     private var control: PDPCommandAndControl!
