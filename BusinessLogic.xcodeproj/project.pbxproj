@@ -10,6 +10,11 @@
 		074F3D2A20C0C67900784754 /* Mutable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074F3D2920C0C67900784754 /* Mutable.swift */; };
 		074F3D2C20C0C6AC00784754 /* EventQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074F3D2B20C0C6AC00784754 /* EventQueue.swift */; };
 		074F3D2F20C1A99A00784754 /* PDPBusinessLogicSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074F3D2E20C1A99A00784754 /* PDPBusinessLogicSpec.swift */; };
+		074F3D3220C1AB9C00784754 /* Product+TestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074F3D3120C1AB9C00784754 /* Product+TestHelper.swift */; };
+		074F3D3520C1AC3F00784754 /* FakeBagService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074F3D3420C1AC3F00784754 /* FakeBagService.swift */; };
+		074F3D3720C1AE4100784754 /* Price+TestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074F3D3620C1AE4100784754 /* Price+TestHelper.swift */; };
+		074F3D3920C1AE8200784754 /* NormalPrice+TestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074F3D3820C1AE8200784754 /* NormalPrice+TestHelper.swift */; };
+		074F3D3B20C1AEA800784754 /* SKU+TestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074F3D3A20C1AEA800784754 /* SKU+TestHelper.swift */; };
 		0760051320BDC0980006CCF8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0760051220BDC0980006CCF8 /* AppDelegate.swift */; };
 		0760051520BDC0980006CCF8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0760051420BDC0980006CCF8 /* ViewController.swift */; };
 		0760051820BDC0980006CCF8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0760051620BDC0980006CCF8 /* Main.storyboard */; };
@@ -43,6 +48,11 @@
 		074F3D2920C0C67900784754 /* Mutable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mutable.swift; sourceTree = "<group>"; };
 		074F3D2B20C0C6AC00784754 /* EventQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventQueue.swift; sourceTree = "<group>"; };
 		074F3D2E20C1A99A00784754 /* PDPBusinessLogicSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDPBusinessLogicSpec.swift; sourceTree = "<group>"; };
+		074F3D3120C1AB9C00784754 /* Product+TestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Product+TestHelper.swift"; sourceTree = "<group>"; };
+		074F3D3420C1AC3F00784754 /* FakeBagService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeBagService.swift; sourceTree = "<group>"; };
+		074F3D3620C1AE4100784754 /* Price+TestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Price+TestHelper.swift"; sourceTree = "<group>"; };
+		074F3D3820C1AE8200784754 /* NormalPrice+TestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NormalPrice+TestHelper.swift"; sourceTree = "<group>"; };
+		074F3D3A20C1AEA800784754 /* SKU+TestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKU+TestHelper.swift"; sourceTree = "<group>"; };
 		0760050F20BDC0980006CCF8 /* BusinessLogic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BusinessLogic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0760051220BDC0980006CCF8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0760051420BDC0980006CCF8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -109,6 +119,25 @@
 			path = Test;
 			sourceTree = "<group>";
 		};
+		074F3D3020C1AB8B00784754 /* TestHelper */ = {
+			isa = PBXGroup;
+			children = (
+				074F3D3120C1AB9C00784754 /* Product+TestHelper.swift */,
+				074F3D3620C1AE4100784754 /* Price+TestHelper.swift */,
+				074F3D3820C1AE8200784754 /* NormalPrice+TestHelper.swift */,
+				074F3D3A20C1AEA800784754 /* SKU+TestHelper.swift */,
+			);
+			path = TestHelper;
+			sourceTree = "<group>";
+		};
+		074F3D3320C1AC2F00784754 /* Fake */ = {
+			isa = PBXGroup;
+			children = (
+				074F3D3420C1AC3F00784754 /* FakeBagService.swift */,
+			);
+			path = Fake;
+			sourceTree = "<group>";
+		};
 		0760050620BDC0980006CCF8 = {
 			isa = PBXGroup;
 			children = (
@@ -147,6 +176,8 @@
 		0760052620BDC09D0006CCF8 /* BusinessLogicTests */ = {
 			isa = PBXGroup;
 			children = (
+				074F3D3320C1AC2F00784754 /* Fake */,
+				074F3D3020C1AB8B00784754 /* TestHelper */,
 				0760052720BDC09D0006CCF8 /* BusinessLogicTests.swift */,
 				0760052920BDC09D0006CCF8 /* Info.plist */,
 			);
@@ -404,6 +435,8 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-BusinessLogicTests/Pods-BusinessLogicTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/BrightFutures/BrightFutures.framework",
+				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${BUILT_PRODUCTS_DIR}/AutoEquatable/AutoEquatable.framework",
 				"${BUILT_PRODUCTS_DIR}/KIF/KIF.framework",
 				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
@@ -413,6 +446,8 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BrightFutures.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AutoEquatable.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KIF.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
@@ -470,7 +505,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				074F3D3B20C1AEA800784754 /* SKU+TestHelper.swift in Sources */,
+				074F3D3920C1AE8200784754 /* NormalPrice+TestHelper.swift in Sources */,
+				074F3D3720C1AE4100784754 /* Price+TestHelper.swift in Sources */,
 				074F3D2F20C1A99A00784754 /* PDPBusinessLogicSpec.swift in Sources */,
+				074F3D3520C1AC3F00784754 /* FakeBagService.swift in Sources */,
+				074F3D3220C1AB9C00784754 /* Product+TestHelper.swift in Sources */,
 				0760052820BDC09D0006CCF8 /* BusinessLogicTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

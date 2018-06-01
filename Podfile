@@ -8,6 +8,7 @@ target 'BusinessLogic' do
 end
 
 target 'BusinessLogicTests' do
+    pod 'BrightFutures'
     pod 'Quick', '~> 1.2'
     pod 'Nimble', '~> 7.0'
     pod 'KIF', '~> 3.5'

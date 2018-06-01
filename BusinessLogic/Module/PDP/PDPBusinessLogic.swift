@@ -108,7 +108,7 @@ class PDPBusinessLogic {
     }
 
     private let bagService: BagService
-    private var state: PDPState
+    private(set) var state: PDPState
     
     init(bagService: BagService, product: Product) {
         self.bagService = bagService
