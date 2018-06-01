@@ -4,20 +4,6 @@
 
 import Foundation
 
-enum Mutable<T> {
-    case `nil`
-    case set(T?)
-    
-    func value(from current: T?) -> T? {
-        switch self {
-        case .nil:
-            return current
-        case .set(let value):
-            return value
-        }
-    }
-}
-
 enum AddToBagState {
     case add
     case adding
@@ -29,6 +15,12 @@ struct PDPState {
     let productName: String
     let price: NormalPrice
     let skus: [SKU]
+    
+    /**
+     NOTES:
+ 
+     - There could be a `BagType` which determines whether an item is to be added to the bag or added to the reserve list. This way the `Add to Bag` button can be used for both features. The `AddToBagState` enumerations could even have an associated String value which identifies the text to display to the user in each context. That or a new set of enumerations could be created. It just depends on what the business requires in each context.
+     */
     
     // Mutable
     let addToBagState: AddToBagState
@@ -60,22 +52,22 @@ enum PDPBusinessLogicState {
 
 class PDPBusinessLogic {
     
-    private var previousState: PDPState
+    private var currentState: PDPState
     
     var productID: ProductID {
-        return previousState.productID
+        return currentState.productID
     }
     
     var selectedSKUID: SKUID? {
-        return previousState.selectedSKU?.id
+        return currentState.selectedSKU?.id
     }
     
     init(initialState: PDPState) {
-        self.previousState = initialState
+        self.currentState = initialState
     }
     
     init(product: Product) {
-        self.previousState = PDPState(
+        self.currentState = PDPState(
             productID: product.id,
             productName: product.name,
             price: product.price,
@@ -90,32 +82,32 @@ class PDPBusinessLogic {
     
     func updateAmountToPurchaseTo(_ amount: Int) -> PDPBusinessLogicState {
         // Check the amount adding 0-99, return amount that is allowed
-        return .success(previousState)
+        return .success(currentState)
     }
     
     func addSKUToBag() -> PDPBusinessLogicState {
-        return .success(previousState)
+        return .success(currentState)
     }
     
     func addedSKUToBag() -> PDPBusinessLogicState {
         // Reset the amount to purchase to 1
-        return .success(previousState)
+        return .success(currentState)
     }
     
     func failedToAddSKUToBag() -> PDPBusinessLogicState {
-        return .success(previousState)
+        return .success(currentState)
     }
     
     func selectSKUColor(_ color: SKUColor) -> PDPBusinessLogicState {
-        let selectedSKU: SKU? = skuFor(color: color, size: previousState.selectedSize)
-        self.previousState = previousState.make(selectedSKU: .set(selectedSKU))
-        return .success(previousState)
+        let selectedSKU: SKU? = skuFor(color: color, size: currentState.selectedSize)
+        self.currentState = currentState.make(selectedSKU: .set(selectedSKU))
+        return .success(currentState)
     }
     
     func selectSKUSize(_ size: SKUSize) -> PDPBusinessLogicState {
-        let selectedSKU: SKU? = skuFor(color: previousState.selectedColor, size: size)
-        self.previousState = previousState.make(selectedSKU: .set(selectedSKU))
-        return .success(previousState)
+        let selectedSKU: SKU? = skuFor(color: currentState.selectedColor, size: size)
+        self.currentState = currentState.make(selectedSKU: .set(selectedSKU))
+        return .success(currentState)
     }
     
     private func skuFor(color: SKUColor?, size: SKUSize?) -> SKU? {
