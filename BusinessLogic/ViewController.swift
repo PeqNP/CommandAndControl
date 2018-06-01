@@ -29,7 +29,7 @@ extension ViewController: PDPCommandAndControlDelegate {
         case .hideLoadingIndicator:
             // Hide loading indicator
             return
-        case .updated(let viewState):
+        case .update(let viewState):
             // Update the view
             return
         case .showShippingInfo(let viewState):

@@ -18,30 +18,44 @@ enum Mutable<T> {
     }
 }
 
+enum AddToBagState {
+    case add
+    case adding
+    case failedToAdd
+}
+
 struct PDPState {
     let productID: ProductID
     let productName: String
     let price: NormalPrice
     let skus: [SKU]
     
-    // Consider putting `isLoading: Bool` and other view state information in here. This will greatly reduce the number of delegate cases that the kitchen needs to send. Does it make it easier on the view controller though? Could also be that the kitchen still has the cases, and the state has the view information (such as loading), to reduce complexity in the view controller.
-    
+    // Mutable
+    let addToBagState: AddToBagState
     let selectedColor: SKUColor?
     let selectedSize: SKUSize?
     let selectedSKU: SKU?
+    let error: Error?
     
-    func make(selectedColor: Mutable<SKUColor> = .nil, selectedSize: Mutable<SKUSize> = .nil, selectedSKU: Mutable<SKU> = .nil) -> PDPState {
+    func make(addToBagState: AddToBagState? = nil, selectedColor: Mutable<SKUColor> = .nil, selectedSize: Mutable<SKUSize> = .nil, selectedSKU: Mutable<SKU> = .nil, error: Mutable<Error> = .nil) -> PDPState {
         return PDPState(
             productID: self.productID,
             productName: self.productName,
             price: self.price,
             skus: self.skus,
             
+            addToBagState: addToBagState ?? self.addToBagState,
             selectedColor: selectedColor.value(from: self.selectedColor),
             selectedSize: selectedSize.value(from: self.selectedSize),
-            selectedSKU: selectedSKU.value(from: self.selectedSKU)
+            selectedSKU: selectedSKU.value(from: self.selectedSKU),
+            error: error.value(from: self.error)
         )
     }
+}
+
+enum PDPBusinessLogicState {
+    case success(PDPState)
+    case error(Error)
 }
 
 class PDPBusinessLogic {
@@ -66,34 +80,42 @@ class PDPBusinessLogic {
             productName: product.name,
             price: product.price,
             skus: product.skus,
+            addToBagState: .add,
             selectedColor: nil,
             selectedSize: nil,
-            selectedSKU: nil
+            selectedSKU: nil,
+            error: nil
         )
     }
     
-    func addSKUToBag() -> PDPState {
-        return previousState
+    func updateAmountToPurchaseTo(_ amount: Int) -> PDPBusinessLogicState {
+        // Check the amount adding 0-99, return amount that is allowed
+        return .success(previousState)
     }
     
-    func addedSKUToBag() -> PDPState {
-        return previousState
+    func addSKUToBag() -> PDPBusinessLogicState {
+        return .success(previousState)
     }
     
-    func failedToAddSKUToBag() -> PDPState {
-        return previousState
+    func addedSKUToBag() -> PDPBusinessLogicState {
+        // Reset the amount to purchase to 1
+        return .success(previousState)
     }
     
-    func selectSKUColor(_ color: SKUColor) -> PDPState {
+    func failedToAddSKUToBag() -> PDPBusinessLogicState {
+        return .success(previousState)
+    }
+    
+    func selectSKUColor(_ color: SKUColor) -> PDPBusinessLogicState {
         let selectedSKU: SKU? = skuFor(color: color, size: previousState.selectedSize)
         self.previousState = previousState.make(selectedSKU: .set(selectedSKU))
-        return previousState
+        return .success(previousState)
     }
     
-    func selectSKUSize(_ size: SKUSize) -> PDPState {
+    func selectSKUSize(_ size: SKUSize) -> PDPBusinessLogicState {
         let selectedSKU: SKU? = skuFor(color: previousState.selectedColor, size: size)
         self.previousState = previousState.make(selectedSKU: .set(selectedSKU))
-        return previousState
+        return .success(previousState)
     }
     
     private func skuFor(color: SKUColor?, size: SKUSize?) -> SKU? {

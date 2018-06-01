@@ -6,7 +6,7 @@ import BrightFutures
 import Foundation
 
 enum PDPCommand {
-    case updated(PDPViewState)
+    case update(PDPViewState)
     case showLoadingIndicator
     case hideLoadingIndicator
     case showShippingInfo(ShippingInfoViewState)
@@ -32,6 +32,7 @@ class PDPCommandAndControl {
     weak var delegate: PDPCommandAndControlDelegate?
     
     init(bagService: BagService, shippingService: ShippingService, businessLogic: PDPBusinessLogic, factory: PDPViewStateFactory) {
+        self.bagService = bagService
         self.shippingService = shippingService
         self.businessLogic = businessLogic
         self.factory = factory
@@ -39,14 +40,12 @@ class PDPCommandAndControl {
     
     func selectedSKUSize(_ size: SKUSize) {
         let state = businessLogic.selectSKUSize(size)
-        let viewState = factory.makePDPViewStateFrom(state: state)
-        delegate?.command(.updated(viewState))
+        update(with: state)
     }
     
     func selectedSKUColor(_ color: SKUColor) {
         let state = businessLogic.selectSKUColor(color)
-        let viewState = factory.makePDPViewStateFrom(state: state)
-        delegate?.command(.updated(viewState))
+        update(with: state)
     }
     
     func tappedMoreInfoButton() {
@@ -69,7 +68,12 @@ class PDPCommandAndControl {
             .execute()
     }
     
-    func addToBag() {
+    func amountChanged(_ amount: Int) {
+        let state = businessLogic.updateAmountToPurchaseTo(amount)
+        update(with: state)
+    }
+    
+    func addToBagTapped() {
         queue
             .add(showLoadingIndicator)
             .add(addItemToBag)
@@ -79,46 +83,72 @@ class PDPCommandAndControl {
     
     // MARK: - Actions
     
-    func showLoadingIndicator() {
+    private func showLoadingIndicator() {
         delegate?.command(.showLoadingIndicator)
     }
     
-    func hideLoadingIndicator() {
+    private func hideLoadingIndicator() {
         delegate?.command(.hideLoadingIndicator)
     }
 
-    func loadShippingInformation() -> QueueableFuture? {
+    private func loadShippingInformation() -> QueueableFuture? {
         return shippingService.shippingInformationFor(productID: businessLogic.productID)
             .onSuccess { [weak self] (shippingInfo) in
-                guard let strongSelf = self else {
-                    return
-                }
-                let viewState = strongSelf.factory.makeShippingInfoViewStateFrom(shippingInfo: shippingInfo)
-                strongSelf.delegate?.command(.showShippingInfo(viewState))
+                self?.showShippingInfo(shippingInfo)
             }
             .onFailure { [weak self] (error) in
-                self?.delegate?.command(.showError(error))
+                self?.showError(error)
             }
             .makeQueueable()
     }
     
-    func addItemToBag() -> QueueableFuture? {
+    private func addItemToBag() -> QueueableFuture? {
         guard let skuID = businessLogic.selectedSKUID else {
             return nil
         }
-        let state = businessLogic.addSKUToBag()
-        let viewState = factory.makePDPViewStateFrom(state: state)
-        delegate?.command(.updated(viewState))
+        startAddingSKUToBag()
         return bagService.addToBag(skuID: skuID)
             .onSuccess { [weak self] _ in
-                guard let strongSelf = self else {
-                    return
-                }
-                let state = strongSelf.businessLogic.addedSKUToBag()
-                let viewState = strongSelf.factory.makePDPViewStateFrom(state: state)
-                strongSelf.delegate?.command(.updated(viewState))
+                self?.finishAddingSKUToBag()
+            }
+            .onFailure { [weak self] _ in
+                self?.failedToAddSKUToBag()
             }
             .makeQueueable()
+    }
+    
+    private func startAddingSKUToBag() {
+        let state = businessLogic.addSKUToBag()
+        update(with: state)
+    }
+    
+    private func finishAddingSKUToBag() {
+        let state = businessLogic.addedSKUToBag()
+        update(with: state)
+    }
+    
+    private func failedToAddSKUToBag() {
+        let state = businessLogic.failedToAddSKUToBag()
+        update(with: state)
+    }
+    
+    private func showShippingInfo(_ shippingInfo: ShippingInfo) {
+        let viewState = factory.makeShippingInfoViewStateFrom(shippingInfo: shippingInfo)
+        delegate?.command(.showShippingInfo(viewState))
+    }
+    
+    private func showError(_ error: Error) {
+        delegate?.command(.showError(error))
+    }
+    
+    private func update(with state: PDPBusinessLogicState) {
+        switch state {
+        case .success(let pdpState):
+            let viewState = factory.makePDPViewStateFrom(state: pdpState)
+            delegate?.command(.update(viewState))
+        case .error(let error):
+            delegate?.command(.showError(error))
+        }
     }
 }
 
@@ -149,8 +179,8 @@ class EventQueue {
             if let callback = nextCallback as? SyncCallback {
                 callback()
             }
-            else if let callback = nextCallback as? FutureCallback {
-                callback()?.onComplete { [weak self] _ in
+            else if let callback = nextCallback as? FutureCallback, let future = callback() {
+                future.onComplete { [weak self] _ in
                     self?.execute()
                 }
                 break
