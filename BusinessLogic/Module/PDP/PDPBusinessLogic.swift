@@ -150,6 +150,18 @@ class PDPBusinessLogic {
         return .success(state)
     }
     
+    func selectSKUColor(_ color: SKUColor) -> PDPBusinessLogicState {
+        let selectedSKU: SKU? = skuFor(color: color, size: state.selectedSize)
+        self.state = state.make(selectedSKU: .set(selectedSKU))
+        return .success(state)
+    }
+    
+    func selectSKUSize(_ size: SKUSize) -> PDPBusinessLogicState {
+        let selectedSKU: SKU? = skuFor(color: state.selectedColor, size: size)
+        self.state = state.make(selectedSKU: .set(selectedSKU))
+        return .success(state)
+    }
+    
     func addSKUToBag(_ callback: @escaping PDPBusinessLogicStatusCallback) throws {
         guard .adding != state.addToBagState else {
             throw PDPBusinessLogicError.operationInProgress
@@ -176,20 +188,10 @@ class PDPBusinessLogic {
                 strongSelf.state = strongSelf.state.make(addToBagState: .add)
                 callback(.inProgress, .success(strongSelf.state))
                 callback(.complete, .error(.failedToAddSKUToBag))
-            }
+        }
     }
     
-    func selectSKUColor(_ color: SKUColor) -> PDPBusinessLogicState {
-        let selectedSKU: SKU? = skuFor(color: color, size: state.selectedSize)
-        self.state = state.make(selectedSKU: .set(selectedSKU))
-        return .success(state)
-    }
-    
-    func selectSKUSize(_ size: SKUSize) -> PDPBusinessLogicState {
-        let selectedSKU: SKU? = skuFor(color: state.selectedColor, size: size)
-        self.state = state.make(selectedSKU: .set(selectedSKU))
-        return .success(state)
-    }
+    // MARK: - Private methods
     
     private func skuFor(color: SKUColor?, size: SKUSize?) -> SKU? {
         return nil

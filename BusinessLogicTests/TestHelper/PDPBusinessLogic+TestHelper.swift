@@ -1,10 +1,12 @@
 import AutoEquatable
 import Foundation
+import Spry
 
 @testable import BusinessLogic
 
 extension AddToBagState: AutoEquatable { }
-extension PDPState: AutoEquatable { }
+extension PDPState: AutoEquatable, SpryEquatable { }
+extension PDPCommand: AutoEquatable, SpryEquatable { }
 
 extension PDPBusinessLogicError: AutoEquatable { }
 extension PDPBusinessLogicState: AutoEquatable { }

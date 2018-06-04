@@ -28,7 +28,7 @@ struct SKUColor {
 
 struct SKUSize {
     let name: String
-    let metaDescription: String
+    let metaDescription: String?
 }
 
 struct SKU {

@@ -140,7 +140,9 @@ class PDPCommandAndControl {
      */
     private func addToBagTapped() {
         queue
+            .add(showLoadingIndicator)
             .add(addSKUToBag)
+            .add(hideLoadingIndicator)
             .execute()
     }
     

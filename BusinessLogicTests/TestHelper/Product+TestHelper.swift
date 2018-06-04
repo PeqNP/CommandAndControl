@@ -2,9 +2,13 @@
  Copyright © 2018 Upstart Illustration LLC. All rights reserved.
  */
 
+import AutoEquatable
 import Foundation
+import Spry
 
 @testable import BusinessLogic
+
+extension Product: AutoEquatable, SpryEquatable { }
 
 extension Product {
     

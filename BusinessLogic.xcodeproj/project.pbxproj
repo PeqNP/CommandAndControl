@@ -16,6 +16,15 @@
 		074F3D3920C1AE8200784754 /* NormalPrice+TestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074F3D3820C1AE8200784754 /* NormalPrice+TestHelper.swift */; };
 		074F3D3B20C1AEA800784754 /* SKU+TestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074F3D3A20C1AEA800784754 /* SKU+TestHelper.swift */; };
 		074F3D3D20C1B0CC00784754 /* PDPBusinessLogic+TestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074F3D3C20C1B0CC00784754 /* PDPBusinessLogic+TestHelper.swift */; };
+		074F3D3F20C5876B00784754 /* PDPCommandAndControlSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074F3D3E20C5876B00784754 /* PDPCommandAndControlSpec.swift */; };
+		074F3D4120C587DB00784754 /* FakeShippingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074F3D4020C587DB00784754 /* FakeShippingService.swift */; };
+		074F3D4320C5882500784754 /* FakePDPBusinessLogicFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074F3D4220C5882500784754 /* FakePDPBusinessLogicFactory.swift */; };
+		074F3D4520C588B200784754 /* FakePDPViewStateFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074F3D4420C588B200784754 /* FakePDPViewStateFactory.swift */; };
+		074F3D4720C58A6F00784754 /* FakePDPBusinessLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074F3D4620C58A6F00784754 /* FakePDPBusinessLogic.swift */; };
+		074F3D4920C5B35B00784754 /* PDPViewState+TestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074F3D4820C5B35B00784754 /* PDPViewState+TestHelper.swift */; };
+		074F3D4B20C5B8FC00784754 /* PDPBusinessLogicState+TestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074F3D4A20C5B8FC00784754 /* PDPBusinessLogicState+TestHelper.swift */; };
+		074F3D4D20C5B99B00784754 /* FakePDPCommandAndControlDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074F3D4C20C5B99B00784754 /* FakePDPCommandAndControlDelegate.swift */; };
+		074F3D4F20C5CE2E00784754 /* ShippingService+TestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074F3D4E20C5CE2E00784754 /* ShippingService+TestHelper.swift */; };
 		0760051320BDC0980006CCF8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0760051220BDC0980006CCF8 /* AppDelegate.swift */; };
 		0760051520BDC0980006CCF8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0760051420BDC0980006CCF8 /* ViewController.swift */; };
 		0760051820BDC0980006CCF8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0760051620BDC0980006CCF8 /* Main.storyboard */; };
@@ -54,6 +63,15 @@
 		074F3D3820C1AE8200784754 /* NormalPrice+TestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NormalPrice+TestHelper.swift"; sourceTree = "<group>"; };
 		074F3D3A20C1AEA800784754 /* SKU+TestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKU+TestHelper.swift"; sourceTree = "<group>"; };
 		074F3D3C20C1B0CC00784754 /* PDPBusinessLogic+TestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDPBusinessLogic+TestHelper.swift"; sourceTree = "<group>"; };
+		074F3D3E20C5876B00784754 /* PDPCommandAndControlSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDPCommandAndControlSpec.swift; sourceTree = "<group>"; };
+		074F3D4020C587DB00784754 /* FakeShippingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeShippingService.swift; sourceTree = "<group>"; };
+		074F3D4220C5882500784754 /* FakePDPBusinessLogicFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakePDPBusinessLogicFactory.swift; sourceTree = "<group>"; };
+		074F3D4420C588B200784754 /* FakePDPViewStateFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakePDPViewStateFactory.swift; sourceTree = "<group>"; };
+		074F3D4620C58A6F00784754 /* FakePDPBusinessLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakePDPBusinessLogic.swift; sourceTree = "<group>"; };
+		074F3D4820C5B35B00784754 /* PDPViewState+TestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDPViewState+TestHelper.swift"; sourceTree = "<group>"; };
+		074F3D4A20C5B8FC00784754 /* PDPBusinessLogicState+TestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PDPBusinessLogicState+TestHelper.swift"; sourceTree = "<group>"; };
+		074F3D4C20C5B99B00784754 /* FakePDPCommandAndControlDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakePDPCommandAndControlDelegate.swift; sourceTree = "<group>"; };
+		074F3D4E20C5CE2E00784754 /* ShippingService+TestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShippingService+TestHelper.swift"; sourceTree = "<group>"; };
 		0760050F20BDC0980006CCF8 /* BusinessLogic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BusinessLogic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0760051220BDC0980006CCF8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0760051420BDC0980006CCF8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -115,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				074F3D2E20C1A99A00784754 /* PDPBusinessLogicSpec.swift */,
+				074F3D3E20C5876B00784754 /* PDPCommandAndControlSpec.swift */,
 			);
 			path = Test;
 			sourceTree = "<group>";
@@ -122,11 +141,14 @@
 		074F3D3020C1AB8B00784754 /* TestHelper */ = {
 			isa = PBXGroup;
 			children = (
-				074F3D3120C1AB9C00784754 /* Product+TestHelper.swift */,
-				074F3D3620C1AE4100784754 /* Price+TestHelper.swift */,
 				074F3D3820C1AE8200784754 /* NormalPrice+TestHelper.swift */,
-				074F3D3A20C1AEA800784754 /* SKU+TestHelper.swift */,
 				074F3D3C20C1B0CC00784754 /* PDPBusinessLogic+TestHelper.swift */,
+				074F3D4A20C5B8FC00784754 /* PDPBusinessLogicState+TestHelper.swift */,
+				074F3D4820C5B35B00784754 /* PDPViewState+TestHelper.swift */,
+				074F3D3620C1AE4100784754 /* Price+TestHelper.swift */,
+				074F3D3120C1AB9C00784754 /* Product+TestHelper.swift */,
+				074F3D4E20C5CE2E00784754 /* ShippingService+TestHelper.swift */,
+				074F3D3A20C1AEA800784754 /* SKU+TestHelper.swift */,
 			);
 			path = TestHelper;
 			sourceTree = "<group>";
@@ -135,6 +157,11 @@
 			isa = PBXGroup;
 			children = (
 				074F3D3420C1AC3F00784754 /* FakeBagService.swift */,
+				074F3D4620C58A6F00784754 /* FakePDPBusinessLogic.swift */,
+				074F3D4220C5882500784754 /* FakePDPBusinessLogicFactory.swift */,
+				074F3D4C20C5B99B00784754 /* FakePDPCommandAndControlDelegate.swift */,
+				074F3D4420C588B200784754 /* FakePDPViewStateFactory.swift */,
+				074F3D4020C587DB00784754 /* FakeShippingService.swift */,
 			);
 			path = Fake;
 			sourceTree = "<group>";
@@ -505,12 +532,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				074F3D4D20C5B99B00784754 /* FakePDPCommandAndControlDelegate.swift in Sources */,
 				074F3D3B20C1AEA800784754 /* SKU+TestHelper.swift in Sources */,
+				074F3D4F20C5CE2E00784754 /* ShippingService+TestHelper.swift in Sources */,
 				074F3D3920C1AE8200784754 /* NormalPrice+TestHelper.swift in Sources */,
 				074F3D3720C1AE4100784754 /* Price+TestHelper.swift in Sources */,
+				074F3D3F20C5876B00784754 /* PDPCommandAndControlSpec.swift in Sources */,
+				074F3D4520C588B200784754 /* FakePDPViewStateFactory.swift in Sources */,
 				074F3D2F20C1A99A00784754 /* PDPBusinessLogicSpec.swift in Sources */,
 				074F3D3520C1AC3F00784754 /* FakeBagService.swift in Sources */,
+				074F3D4920C5B35B00784754 /* PDPViewState+TestHelper.swift in Sources */,
+				074F3D4320C5882500784754 /* FakePDPBusinessLogicFactory.swift in Sources */,
+				074F3D4B20C5B8FC00784754 /* PDPBusinessLogicState+TestHelper.swift in Sources */,
 				074F3D3220C1AB9C00784754 /* Product+TestHelper.swift in Sources */,
+				074F3D4120C587DB00784754 /* FakeShippingService.swift in Sources */,
+				074F3D4720C58A6F00784754 /* FakePDPBusinessLogic.swift in Sources */,
 				074F3D3D20C1B0CC00784754 /* PDPBusinessLogic+TestHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
