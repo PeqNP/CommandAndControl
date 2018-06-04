@@ -141,12 +141,19 @@ class PDPCommandAndControlSpec: QuickSpec {
                     subject.receive(.addToBagTapped)
                 }
                 
+                it("should have sent the correct commands") {
+                    let expectedCommands: [PDPCommand] = [
+                        .showLoadingIndicator
+                    ]
+                    expect(delegate.commands).toEventually(equal(expectedCommands))
+                }
+
                 context("when the process begins") {
                     beforeEach {
                         callback(.inProgress, .success(expectedState))
                     }
                     
-                    fit("should have sent the correct commands") {
+                    it("should have sent the correct commands") {
                         let expectedCommands: [PDPCommand] = [
                             .showLoadingIndicator,
                             .update(PDPViewState.testMake(productName: "Test"))

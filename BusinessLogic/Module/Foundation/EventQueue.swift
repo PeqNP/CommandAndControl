@@ -49,6 +49,7 @@ class EventQueue {
                 callback { [weak self] in
                     self?.execute()
                 }
+                break
             }
         }
     }
