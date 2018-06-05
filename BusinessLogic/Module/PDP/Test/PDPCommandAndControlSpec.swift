@@ -118,7 +118,7 @@ class PDPCommandAndControlSpec: QuickSpec {
                 }
             }
             
-            // MARK: Example showing how a logic future is used
+            // MARK: Example showing how a BusinessLogic `Future` is tested
             
             describe("add SKU to the bag") {
                 let expectedState = PDPState.testMake(productID: 10, productName: "Test")
@@ -127,6 +127,13 @@ class PDPCommandAndControlSpec: QuickSpec {
                 // TODO: Add throwing case
                 
                 beforeEach {
+                    delegate.stub(.command).andReturn()
+                    viewStateFactory.stub(.makePDPViewStateFrom).with(expectedState).andReturn(PDPViewState.testMake(productName: "Test"))
+                    
+                    subject.receive(.configure(product))
+                }
+                
+                let addSKUToBag = {
                     logic.stub(.addSKUToBag).andDo({ (args) -> Any? in
                         guard let callbackArg = args[0] as? PDPBusinessLogicStatusCallback else {
                             return XCTFail("Did not call BusinessLogic.addSKUToBag")
@@ -134,22 +141,25 @@ class PDPCommandAndControlSpec: QuickSpec {
                         callback = callbackArg
                         return Void()
                     })
-                    delegate.stub(.command).andReturn()
-                    viewStateFactory.stub(.makePDPViewStateFrom).with(expectedState).andReturn(PDPViewState.testMake(productName: "Test"))
-
-                    subject.receive(.configure(product))
                     subject.receive(.addToBagTapped)
                 }
                 
-                it("should have sent the correct commands") {
-                    let expectedCommands: [PDPCommand] = [
-                        .showLoadingIndicator
-                    ]
-                    expect(delegate.commands).toEventually(equal(expectedCommands))
-                }
-
                 context("when the process begins") {
                     beforeEach {
+                        addSKUToBag()
+                    }
+                    
+                    it("should have sent the correct commands") {
+                        let expectedCommands: [PDPCommand] = [
+                            .showLoadingIndicator
+                        ]
+                        expect(delegate.commands).toEventually(equal(expectedCommands))
+                    }
+                }
+
+                context("when the process is in progress") {
+                    beforeEach {
+                        addSKUToBag()
                         callback(.inProgress, .success(expectedState))
                     }
                     
@@ -164,6 +174,7 @@ class PDPCommandAndControlSpec: QuickSpec {
                 
                 context("when the process succeeds") {
                     beforeEach {
+                        addSKUToBag()
                         callback(.complete, .success(expectedState))
                     }
                     
@@ -179,6 +190,7 @@ class PDPCommandAndControlSpec: QuickSpec {
                 
                 context("when the process fails") {
                     beforeEach {
+                        addSKUToBag()
                         callback(.complete, .error(.failedToAddSKUToBag))
                     }
                     
@@ -186,6 +198,21 @@ class PDPCommandAndControlSpec: QuickSpec {
                         let expectedCommands: [PDPCommand] = [
                             .showLoadingIndicator,
                             .showError(PDPBusinessLogicError.failedToAddSKUToBag),
+                            .hideLoadingIndicator
+                        ]
+                        expect(delegate.commands).toEventually(equal(expectedCommands))
+                    }
+                }
+                
+                context("when an exception is thrown") {
+                    beforeEach {
+                        logic.stub(.addSKUToBag).andThrow(PDPBusinessLogicError.operationInProgress)
+                        subject.receive(.addToBagTapped)
+                    }
+
+                    it("should have sent the correct commands") {
+                        let expectedCommands: [PDPCommand] = [
+                            .showLoadingIndicator,
                             .hideLoadingIndicator
                         ]
                         expect(delegate.commands).toEventually(equal(expectedCommands))

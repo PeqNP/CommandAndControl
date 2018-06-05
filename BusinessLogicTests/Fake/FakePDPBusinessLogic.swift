@@ -57,6 +57,6 @@ class FakePDPBusinessLogic: PDPBusinessLogic, Spryable {
     }
     
     override func addSKUToBag(_ callback: @escaping PDPBusinessLogicStatusCallback) throws {
-        return spryify(arguments: callback)
+        return try spryifyThrows(arguments: callback)
     }
 }
