@@ -37,3 +37,18 @@ struct SKU {
     let size: SKUSize
     let price: Price
 }
+
+extension SKUSize: Equatable {
+    
+    public static func ==(lhs: SKUSize, rhs: SKUSize) -> Bool {
+        return lhs.name == rhs.name
+            && lhs.metaDescription == rhs.metaDescription
+    }
+}
+extension SKUColor: Equatable {
+    
+    public static func ==(lhs: SKUColor, rhs: SKUColor) -> Bool {
+        return lhs.name == rhs.name
+            && lhs.imageURL == rhs.imageURL
+    }
+}

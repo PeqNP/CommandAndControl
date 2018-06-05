@@ -2,6 +2,7 @@
  Copyright © 2018 Upstart Illustration LLC. All rights reserved.
  */
 
+import BrightFutures
 import Foundation
 import Quick
 import Nimble
@@ -48,6 +49,8 @@ class PDPBusinessLogicSpec: QuickSpec {
                 }
             }
             
+            // MARK: A generic example of how to test the state machine
+            
             describe("increasing the amount to purchase") {
                 var state: PDPBusinessLogicState!
                 var expectedState: PDPBusinessLogicState!
@@ -77,6 +80,92 @@ class PDPBusinessLogicSpec: QuickSpec {
                     }
                 }
             }
+            
+            // MARK: An example of how a service can be tested
+            
+            describe("adding a sku to the bag") {
+                var status: PDPBusinessLogicStatus!
+                var state: PDPBusinessLogicState!
+                var expectedState: PDPBusinessLogicState!
+                var expectedError: PDPBusinessLogicError?
+                var promise: Promise<IgnorableResult, BagServiceError>!
+                
+                beforeEach {
+                    expectedError = nil
+                    promise = Promise<IgnorableResult, BagServiceError>()
+                    
+                    bagService.stub(.addToBag).with(SKUID(2)).andReturn(promise.future)
+                    product = Product.testMake(id: 1, skus: [
+                        SKU.testMake(id: 2, color: SKUColor.testMake(name: "Red"), size: SKUSize.testMake(name: "Large"))
+                    ])
+                    subject = PDPBusinessLogic(bagService: bagService, product: product)
+
+                    _ = subject.selectSKUSize(SKUSize(name: "Large", metaDescription: nil))
+                    _ = subject.selectSKUColor(SKUColor(name: "Red", imageURL: nil))
+                }
+                
+                let subjectAction = {
+                    do {
+                        try subject.addSKUToBag { (statusArg, stateArg) in
+                            status = statusArg
+                            state = stateArg
+                        }
+                    } catch {
+                        expectedError = error as? PDPBusinessLogicError
+                    }
+                }
+                
+                context("when the process starts") {
+                    beforeEach {
+                        expectedState = .success(subject.state.make(addToBagState: .adding))
+                        subjectAction()
+                    }
+                    
+                    it("should have returned the correct state and status") {
+                        expect(status).to(equal(PDPBusinessLogicStatus.inProgress))
+                        expect(state).to(equal(expectedState))
+                    }
+                }
+                
+                context("when the process succeeds") {
+                    beforeEach {
+                        expectedState = .success(subject.state.make(addToBagState: .added))
+                        promise.success(IgnorableResult())
+                        subjectAction()
+                        expect(promise.future.value).toEventuallyNot(beNil())
+                    }
+                    
+                    it("should have returned the correct state and status") {
+                        expect(status).to(equal(PDPBusinessLogicStatus.complete))
+                        expect(state).to(equal(expectedState))
+                    }
+                }
+                
+                context("when the process fails") {
+                    beforeEach {
+                        promise.failure(.generic)
+                        subjectAction()
+                        expect(promise.future.error).toEventuallyNot(beNil())
+                    }
+                    
+                    it("should have returned the correct state and status") {
+                        expect(status).to(equal(PDPBusinessLogicStatus.complete))
+                        expect(state).to(equal(PDPBusinessLogicState.error(.failedToAddSKUToBag)))
+                    }
+                }
+
+                context("when attempting to add to the bag more than once") {
+                    beforeEach {
+                        subjectAction()
+                        subjectAction()
+                    }
+                    
+                    it("should have returned the correct state and status") {
+                        expect(expectedError).to(equal(PDPBusinessLogicError.operationInProgress))
+                    }
+                }
+            }
         }
+        
     }
 }

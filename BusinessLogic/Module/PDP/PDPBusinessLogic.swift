@@ -152,13 +152,13 @@ class PDPBusinessLogic {
     
     func selectSKUColor(_ color: SKUColor) -> PDPBusinessLogicState {
         let selectedSKU: SKU? = skuFor(color: color, size: state.selectedSize)
-        self.state = state.make(selectedSKU: .set(selectedSKU))
+        self.state = state.make(selectedColor: .set(color), selectedSKU: .set(selectedSKU))
         return .success(state)
     }
     
     func selectSKUSize(_ size: SKUSize) -> PDPBusinessLogicState {
         let selectedSKU: SKU? = skuFor(color: state.selectedColor, size: size)
-        self.state = state.make(selectedSKU: .set(selectedSKU))
+        self.state = state.make(selectedSize: .set(size), selectedSKU: .set(selectedSKU))
         return .success(state)
     }
     
@@ -194,6 +194,8 @@ class PDPBusinessLogic {
     // MARK: - Private methods
     
     private func skuFor(color: SKUColor?, size: SKUSize?) -> SKU? {
-        return nil
+        return state.skus.first(where: { (sku) -> Bool in
+            return sku.color == color && sku.size == size
+        })
     }
 }
