@@ -16,36 +16,7 @@ class PDPBusinessLogicSpec: QuickSpec {
         
         describe("Given a PDPBusinessLogic") {
             var subject: PDPState!
-            var factory: PDPBusinessLogicFactory!
-
             var state: PDPStateResult!
-
-            beforeEach {
-                factory = PDPBusinessLogicFactory()
-            }
-            
-            describe("initializing") {
-                
-                var product: Product!
-
-                beforeEach {
-                    product = Product.testMake(id: 1, name: "Shoes" /* TODO: price, skus */)
-                    subject = factory.makeFromProduct(product).state
-                }
-                
-                it("should have set the default values") {
-                    expect(subject.productID).to(equal(product.id))
-                    expect(subject.productName).to(equal(product.name))
-                    expect(subject.price).to(equal(product.price))
-                    expect(subject.skus).to(equal(product.skus))
-                    
-                    expect(subject.amountToAddToBag).to(equal(0))
-                    expect(subject.addToBagState).to(equal(AddToBagState.add))
-                    expect(subject.selectedColor).to(beNil())
-                    expect(subject.selectedSize).to(beNil())
-                    expect(subject.selectedSKU).to(beNil())
-                }
-            }
             
             describe("increasing the amount to purchase") {
                 context("when adding one more within limit") {

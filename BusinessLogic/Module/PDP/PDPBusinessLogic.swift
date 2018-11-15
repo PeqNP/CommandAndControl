@@ -12,14 +12,6 @@
 import BrightFutures
 import Foundation
 
-// MARK: - State Model
-
-enum AddToBagState {
-    case add
-    case adding
-    case added
-}
-
 class PDPBusinessLogicFactory {
     func makeFromProduct(_ product: Product) -> PDPBusinessLogic {
         return PDPState(
@@ -36,8 +28,6 @@ class PDPBusinessLogicFactory {
     }
 }
 
-// MARK: - BusinessLogic
-
 enum PDPBusinessLogicError: Error {
     case skuIsNotSelected
     case failedToAddSKUToBag
@@ -51,7 +41,6 @@ enum PDPStateResult {
 }
 
 protocol PDPBusinessLogic {
-    var state: PDPState { get }
     var productID: ProductID { get }
     var selectedSKUID: SKUID? { get }
     
@@ -65,10 +54,6 @@ protocol PDPBusinessLogic {
 }
 
 extension PDPState: PDPBusinessLogic {
-    
-    var state: PDPState {
-        return self
-    }
     
     var selectedSKUID: SKUID? {
         return selectedSKU?.id

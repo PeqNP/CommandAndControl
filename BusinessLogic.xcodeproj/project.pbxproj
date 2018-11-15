@@ -136,9 +136,9 @@
 		074F3D2D20C1A98800784754 /* Test */ = {
 			isa = PBXGroup;
 			children = (
+				07F94C8D219DC18400DB5761 /* PDPBusinessLogicFactorySpec.swift */,
 				074F3D2E20C1A99A00784754 /* PDPBusinessLogicSpec.swift */,
 				074F3D3E20C5876B00784754 /* PDPCommandAndControlSpec.swift */,
-				07F94C8D219DC18400DB5761 /* PDPBusinessLogicFactorySpec.swift */,
 			);
 			path = Test;
 			sourceTree = "<group>";

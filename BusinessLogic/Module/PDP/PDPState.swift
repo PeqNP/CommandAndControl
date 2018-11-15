@@ -1,5 +1,11 @@
 import Foundation
 
+enum AddToBagState {
+    case add
+    case adding
+    case added
+}
+
 struct PDPState {
     let productID: ProductID
     let productName: String

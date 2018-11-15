@@ -23,21 +23,18 @@ class PDPBusinessLogicFactorySpec: QuickSpec {
             
             describe("initializing") {
                 var product: Product!
-                var logic: PDPBusinessLogic!
+                var state: PDPState!
                 
                 beforeEach {
                     product = Product.testMake(id: 1, name: "Shoes" /* TODO: price, skus */)
-                    logic = subject.makeFromProduct(product)
+                    state = (subject.makeFromProduct(product) as! PDPState)
                 }
                 
                 it("should return the correct values") {
-                    expect(logic.productID).to(equal(product.id))
-                    expect(logic.selectedSKUID).to(beNil())
+                    expect(state.selectedSKUID).to(beNil())
                 }
                 
                 it("should have set the correct state default values") {
-                    let state = logic.state
-
                     expect(state.productID).to(equal(product.id))
                     expect(state.productName).to(equal(product.name))
                     expect(state.price).to(equal(product.price))
