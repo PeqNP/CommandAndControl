@@ -17,6 +17,8 @@ class PDPCommandAndControlSpec: QuickSpec {
         describe("Given a PDPCommandAndControl") {
             var subject: PDPCommandAndControl!
             var delegate: FakePDPCommandAndControlDelegate!
+            var processQueue: FakeProcessQueue!
+            var bagService: FakeBagService!
             var shippingService: FakeShippingService!
             var logic: FakePDPBusinessLogic!
             var logicFactory: FakePDPBusinessLogicFactory!
@@ -26,6 +28,8 @@ class PDPCommandAndControlSpec: QuickSpec {
             
             beforeEach {
                 delegate = FakePDPCommandAndControlDelegate()
+                processQueue = FakeProcessQueue()
+                bagService = FakeBagService()
                 shippingService = FakeShippingService()
                 logic = FakePDPBusinessLogic()
                 logicFactory = FakePDPBusinessLogicFactory()
@@ -33,7 +37,7 @@ class PDPCommandAndControlSpec: QuickSpec {
                 
                 viewStateFactory = FakePDPViewStateFactory()
                 
-                subject = PDPCommandAndControl(shippingService: shippingService, logicFactory: logicFactory, viewStateFactory: viewStateFactory)
+                subject = PDPCommandAndControl(processQueue: processQueue, bagService: bagService, shippingService: shippingService, logicFactory: logicFactory, viewStateFactory: viewStateFactory)
                 subject.delegate = delegate
             }
             
@@ -115,8 +119,27 @@ class PDPCommandAndControlSpec: QuickSpec {
                 }
             }
             
-            describe("add selected SKU to the bag") {
-                let expectedState = PDPState.testMake(productID: 10, productName: "Test")
+            describe("add selected SKU to the bag; failure") {
+                beforeEach {
+                    delegate.stub(.command).andReturn()
+                    
+                    subject.receive(.configure(product))
+                    logic.stub(.addSKUToBag).andReturn(PDPStateResult.error(.operationInProgress))
+                    subject.receive(.addToBagTapped)
+                }
+                
+                it("should display an error") {
+                    let expectedCommands: [PDPCommand] = [
+                        .showLoadingIndicator,
+                        .showError(PDPBusinessLogicError.operationInProgress),
+                        .hideLoadingIndicator
+                    ]
+                    expect(delegate.commands).toEventually(equal(expectedCommands))
+                }
+            }
+            
+            describe("add selected SKU to the bag; success") {
+                var promise: Promise<IgnorableResult, BagServiceError>!
                 
                 // TODO: The call is made
                 // Success
@@ -124,6 +147,89 @@ class PDPCommandAndControlSpec: QuickSpec {
                 // Checked updated states
                 
                 beforeEach {
+                    delegate.stub(.command).andReturn()
+                    subject.receive(.configure(product))
+
+                    promise = Promise()
+                    bagService.stub(.addToBag).andReturn(promise.future)
+                    
+                    logic.stub(.selectedSKUID).andReturn(SKUID(10))
+                    logic.stub(.addSKUToBag).andReturn(PDPStateResult.testMake())
+                    subject.receive(.addToBagTapped)
+                }
+                
+                it("should have made a call to the `BagService`") {
+                    expect(bagService).to(haveReceived(.addToBag, with: SKUID(10)))
+                }
+                
+                it("should execute the correct commands") {
+                    let expectedCommands: [PDPCommand] = [
+                        .showLoadingIndicator
+                    ]
+                    expect(delegate.commands).toEventually(equal(expectedCommands))
+                }
+                
+                context("when the request succeeds") {
+                    var callback: ProcessQueueCallback?
+                    let expectedViewState = PDPViewState.testMake(productName: "Test")
+                    
+                    beforeEach {
+                        callback = nil
+                        
+                        let state = PDPState.testMake(productName: "Test")
+                        let result: PDPStateResult = .success(state)
+                        logic.stub(.addedSKUToBag).andReturn(result)
+                        viewStateFactory.stub(.makePDPViewStateFrom).andReturn(expectedViewState)
+                        processQueue.stub(.asyncAfter).andDo { (args) -> Any? in
+                            callback = args[1] as? ProcessQueueCallback
+                            return Void()
+                        }
+                        
+                        promise.success(IgnorableResult())
+                        promise.waitUntilCompleted()
+                    }
+                    
+                    it("should have registered the callback") {
+                        expect(callback).toNot(beNil())
+                    }
+                    
+                    it("should reset the add to bag state in 2 seconds") {
+                        expect(processQueue).to(haveReceived(.asyncAfter, with: TimeInterval(2.0), Argument.anything))
+                    }
+                    
+                    it("should execute the correct commands") {
+                        let expectedCommands: [PDPCommand] = [
+                            .showLoadingIndicator,
+                            .update(expectedViewState),
+                            .hideLoadingIndicator
+                        ]
+                        expect(delegate.commands).toEventually(equal(expectedCommands))
+                    }
+
+                    context("when the callback is made") {
+                        let addViewState = PDPViewState.testMake(addToBagState: .add)
+
+                        beforeEach {
+                            let state = PDPState.testMake(addToBagState: .add)
+                            let result: PDPStateResult = .success(state)
+                            logic.stub(.resetAddSKUToBag).andReturn(result)
+                           
+                            viewStateFactory.resetStubs()
+                            viewStateFactory.stub(.makePDPViewStateFrom).andReturn(addViewState)
+                            
+                            callback?()
+                        }
+                        
+                        fit("should have reset the add to bag state") {
+                            let expectedCommands: [PDPCommand] = [
+                                .showLoadingIndicator,
+                                .update(expectedViewState),
+                                .hideLoadingIndicator,
+                                .update(addViewState)
+                            ]
+                            expect(delegate.commands).toEventually(equal(expectedCommands))
+                        }
+                    }
                 }
             }
         }

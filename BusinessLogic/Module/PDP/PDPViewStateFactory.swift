@@ -22,6 +22,7 @@ struct PDPViewState {
     let selectedSKUColor: SKUColorViewState?
     let selectedSKUSize: SKUSizeViewState?
     let selectedSKU: SKUViewState?
+    let addToBagState: AddToBagState
 }
 
 struct ShippingInfoViewState {
@@ -38,7 +39,8 @@ class PDPViewStateFactory {
             skuSizes: [],
             selectedSKUColor: nil,
             selectedSKUSize: nil,
-            selectedSKU: nil
+            selectedSKU: nil,
+            addToBagState: state.addToBagState
         )
     }
     

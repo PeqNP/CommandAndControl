@@ -42,6 +42,9 @@
 		07F94C8A219DB9BD00DB5761 /* PDPState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F94C89219DB9BD00DB5761 /* PDPState.swift */; };
 		07F94C8C219DBAA700DB5761 /* FakePDPBusinessLogicFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F94C8B219DBAA700DB5761 /* FakePDPBusinessLogicFactory.swift */; };
 		07F94C8E219DC18400DB5761 /* PDPBusinessLogicFactorySpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F94C8D219DC18400DB5761 /* PDPBusinessLogicFactorySpec.swift */; };
+		07F94C90219DDE3700DB5761 /* FakeProcessQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F94C8F219DDE3700DB5761 /* FakeProcessQueue.swift */; };
+		07F94C92219DDE9D00DB5761 /* ProcessQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F94C91219DDE9D00DB5761 /* ProcessQueue.swift */; };
+		07F94C95219DF5B800DB5761 /* Promise+Upstart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F94C94219DF5B800DB5761 /* Promise+Upstart.swift */; };
 		77E048787879E795B6B37E00 /* Pods_BusinessLogic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B16406B025275CA567C99632 /* Pods_BusinessLogic.framework */; };
 /* End PBXBuildFile section */
 
@@ -96,6 +99,9 @@
 		07F94C89219DB9BD00DB5761 /* PDPState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDPState.swift; sourceTree = "<group>"; };
 		07F94C8B219DBAA700DB5761 /* FakePDPBusinessLogicFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakePDPBusinessLogicFactory.swift; sourceTree = "<group>"; };
 		07F94C8D219DC18400DB5761 /* PDPBusinessLogicFactorySpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDPBusinessLogicFactorySpec.swift; sourceTree = "<group>"; };
+		07F94C8F219DDE3700DB5761 /* FakeProcessQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeProcessQueue.swift; sourceTree = "<group>"; };
+		07F94C91219DDE9D00DB5761 /* ProcessQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessQueue.swift; sourceTree = "<group>"; };
+		07F94C94219DF5B800DB5761 /* Promise+Upstart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Promise+Upstart.swift"; sourceTree = "<group>"; };
 		347A4B6EDCB487667B2B5615 /* Pods-BusinessLogicTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BusinessLogicTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BusinessLogicTests/Pods-BusinessLogicTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B13A78379B2C6148576B7729 /* Pods-BusinessLogic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BusinessLogic.release.xcconfig"; path = "Pods/Target Support Files/Pods-BusinessLogic/Pods-BusinessLogic.release.xcconfig"; sourceTree = "<group>"; };
 		B16406B025275CA567C99632 /* Pods_BusinessLogic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BusinessLogic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -129,6 +135,7 @@
 			children = (
 				074F3D2920C0C67900784754 /* Mutable.swift */,
 				074F3D2B20C0C6AC00784754 /* EventQueue.swift */,
+				07F94C91219DDE9D00DB5761 /* ProcessQueue.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -166,6 +173,7 @@
 				07F94C8B219DBAA700DB5761 /* FakePDPBusinessLogicFactory.swift */,
 				074F3D4C20C5B99B00784754 /* FakePDPCommandAndControlDelegate.swift */,
 				074F3D4420C588B200784754 /* FakePDPViewStateFactory.swift */,
+				07F94C8F219DDE3700DB5761 /* FakeProcessQueue.swift */,
 				074F3D4020C587DB00784754 /* FakeShippingService.swift */,
 			);
 			path = Fake;
@@ -209,6 +217,7 @@
 		0760052620BDC09D0006CCF8 /* BusinessLogicTests */ = {
 			isa = PBXGroup;
 			children = (
+				07F94C93219DF5A100DB5761 /* Extension */,
 				074F3D3320C1AC2F00784754 /* Fake */,
 				074F3D3020C1AB8B00784754 /* TestHelper */,
 				0760052920BDC09D0006CCF8 /* Info.plist */,
@@ -298,6 +307,14 @@
 				07F821BE20BE1DD100EF9B74 /* ShippingInfo.swift */,
 			);
 			path = ShippingInfo;
+			sourceTree = "<group>";
+		};
+		07F94C93219DF5A100DB5761 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				07F94C94219DF5B800DB5761 /* Promise+Upstart.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		5D1E6B4F3991A3D0DC3353A5 /* Frameworks */ = {
@@ -519,6 +536,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				07F94C8A219DB9BD00DB5761 /* PDPState.swift in Sources */,
+				07F94C92219DDE9D00DB5761 /* ProcessQueue.swift in Sources */,
 				0760054320BDC4590006CCF8 /* PDPCommandAndControl.swift in Sources */,
 				07F821B920BE1CE900EF9B74 /* Product.swift in Sources */,
 				0760054520BDCD050006CCF8 /* PDPViewStateFactory.swift in Sources */,
@@ -541,7 +559,9 @@
 			files = (
 				074F3D4D20C5B99B00784754 /* FakePDPCommandAndControlDelegate.swift in Sources */,
 				074F3D3B20C1AEA800784754 /* SKU+TestHelper.swift in Sources */,
+				07F94C90219DDE3700DB5761 /* FakeProcessQueue.swift in Sources */,
 				074F3D4F20C5CE2E00784754 /* ShippingService+TestHelper.swift in Sources */,
+				07F94C95219DF5B800DB5761 /* Promise+Upstart.swift in Sources */,
 				074F3D5120C6155600784754 /* Types+TestHelper.swift in Sources */,
 				074F3D3920C1AE8200784754 /* NormalPrice+TestHelper.swift in Sources */,
 				07F94C8E219DC18400DB5761 /* PDPBusinessLogicFactorySpec.swift in Sources */,

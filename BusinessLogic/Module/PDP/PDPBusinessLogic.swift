@@ -48,8 +48,8 @@ protocol PDPBusinessLogic {
     func removeOneFromPurchase() -> PDPStateResult
     func selectSKUSize(_ size: SKUSize) -> PDPStateResult
     func selectSKUColor(_ color: SKUColor) -> PDPStateResult
+    func resetAddSKUToBag() -> PDPStateResult
     func addSKUToBag() -> PDPStateResult
-    func addingSKUToBag() -> PDPStateResult
     func addedSKUToBag() -> PDPStateResult
 }
 
@@ -87,11 +87,11 @@ extension PDPState: PDPBusinessLogic {
         return .success(make(selectedColor: .set(color), selectedSKU: .set(selectedSKU)))
     }
     
-    func addSKUToBag() -> PDPStateResult {
+    func resetAddSKUToBag() -> PDPStateResult {
         return .success(make(addToBagState: .add))
     }
     
-    func addingSKUToBag() -> PDPStateResult {
+    func addSKUToBag() -> PDPStateResult {
         guard .adding != addToBagState else {
             return .error(.operationInProgress)
         }

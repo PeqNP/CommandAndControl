@@ -1,7 +1,13 @@
 /**
  Provides the Command & Control service for the Product Page (PDP).
  
- NOTES:
+ This C&C provides the webbing between business logic, services, and view state factories. This ensures the C&C is lean, easy to test, and enforces single responsibilty.
+ 
+ Definitions:
+ C&C - Command & Control
+ BL - Business Logic
+ 
+ Notes:
  When looking through the code, notice how each method performs a single operation (single responsibility). This was a pattern that was discovered after 1. the business logic was moved out of the C&C and into the BL 2. the necessity to clearly describe a set of discrete operations that must take place in a given sequence with the help of the `EventQueue`.
  
  Copyright © 2018 Upstart Illustration LLC. All rights reserved.
@@ -34,6 +40,10 @@ enum PDPEvent {
     case addToBagTapped
 }
 
+enum PDPCommandAndControlError: Error {
+    case failedToAddSKUToBag
+}
+
 protocol PDPCommandAndControlDelegate: class {
     func command(_ action: PDPCommand)
 }
@@ -43,13 +53,17 @@ class PDPCommandAndControl {
     private let queue: EventQueue = EventQueue()
     private var state: PDPBusinessLogic!
 
+    private let processQueue: ProcessQueue
+    private let bagService: BagService
     private let shippingService: ShippingService
     private let logicFactory: PDPBusinessLogicFactory
     private let viewStateFactory: PDPViewStateFactory
 
     weak var delegate: PDPCommandAndControlDelegate?
     
-    init(shippingService: ShippingService, logicFactory: PDPBusinessLogicFactory, viewStateFactory: PDPViewStateFactory) {
+    init(processQueue: ProcessQueue, bagService: BagService, shippingService: ShippingService, logicFactory: PDPBusinessLogicFactory, viewStateFactory: PDPViewStateFactory) {
+        self.processQueue = processQueue
+        self.bagService = bagService
         self.shippingService = shippingService
         self.logicFactory = logicFactory
         self.viewStateFactory = viewStateFactory
@@ -89,7 +103,6 @@ class PDPCommandAndControl {
     // MARK: Events
     
     private func selectedSKUSize(_ size: SKUSize) {
-        // TODO: Will need to return an enumerated value
         let state = self.state.selectSKUSize(size)
         update(with: state)
     }
@@ -179,10 +192,38 @@ class PDPCommandAndControl {
      Add the selected SKU to the shopper's bag.
      */
     private func addSKUToBag() -> QueueableFuture? {
-        // TODO: Make service call to add SKU to bag
         let result = self.state.addSKUToBag()
+        guard case .success = result else {
+            update(with: result)
+            return nil
+        }
+        guard let skuID = state.selectedSKUID else {
+            return nil
+        }
+        
+        return bagService.addToBag(skuID: skuID)
+            .onSuccess { [weak self] _ in
+                self?.addedSKUToBag()
+            }
+            .onFailure { [weak self] (error) in
+                self?.showError(PDPCommandAndControlError.failedToAddSKUToBag)
+            }
+            .onComplete { [weak self] _ in
+                self?.processQueue.asyncAfter(interval: 2.0) {
+                    self?.resetAddToBagState()
+                }
+            }
+            .makeQueueable()
+    }
+    
+    private func addedSKUToBag() {
+        let result = self.state.addedSKUToBag()
         update(with: result)
-        return QueueableFuture()
+    }
+    
+    private func resetAddToBagState() {
+        let result = self.state.resetAddSKUToBag()
+        update(with: result)
     }
     
     private func showShippingInfo(_ shippingInfo: ShippingInfo) {
@@ -193,7 +234,7 @@ class PDPCommandAndControl {
     /**
      Show an error.
      
-     The `Error` in this context is purposely generic as it can handle `Error`s from `Service`s, `BusinessLogic`, or any other dependency.
+     The `Error` in this context is purposely generic as it can handle `Error`s from `Service`s, `BusinessLogic`, `CommandAndControl`, or any other dependency.
      */
     private func showError(_ error: Error) {
         delegate?.command(.showError(error))

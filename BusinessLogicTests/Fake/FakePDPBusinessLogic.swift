@@ -17,8 +17,8 @@ class FakePDPBusinessLogic: PDPBusinessLogic, Spryable {
         case removeOneFromPurchase = "removeOneFromPurchase()"
         case selectSKUSize = "selectSKUSize"
         case selectSKUColor = "selectSKUColor"
+        case resetAddSKUToBag = "resetAddSKUToBag"
         case addSKUToBag = "addSKUToBag()"
-        case addingSKUToBag = "addingSKUToBag()"
         case addedSKUToBag = "addedSKUToBag()"
     }
     
@@ -52,7 +52,7 @@ class FakePDPBusinessLogic: PDPBusinessLogic, Spryable {
         return spryify(arguments: color)
     }
     
-    func addSKUToBag() -> PDPStateResult {
+    func resetAddSKUToBag() -> PDPStateResult {
         return spryify()
     }
     
@@ -60,7 +60,7 @@ class FakePDPBusinessLogic: PDPBusinessLogic, Spryable {
         return spryify()
     }
     
-    func addingSKUToBag() -> PDPStateResult {
+    func addSKUToBag() -> PDPStateResult {
         return spryify()
     }
     
