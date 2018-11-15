@@ -20,31 +20,18 @@ enum AddToBagState {
     case added
 }
 
-struct PDPState {
-    let productID: ProductID
-    let productName: String
-    let price: NormalPrice
-    let skus: [SKU]
-    
-    // Mutable
-    let amountToAddToBag: Int
-    let addToBagState: AddToBagState
-    let selectedColor: SKUColor?
-    let selectedSize: SKUSize?
-    let selectedSKU: SKU?
-    
-    func make(amountToAddToBag: Int? = nil, addToBagState: AddToBagState? = nil, selectedColor: Mutable<SKUColor> = .nil, selectedSize: Mutable<SKUSize> = .nil, selectedSKU: Mutable<SKU> = .nil) -> PDPState {
+class PDPBusinessLogicFactory {
+    func makeFromProduct(_ product: Product) -> PDPBusinessLogic {
         return PDPState(
-            productID: self.productID,
-            productName: self.productName,
-            price: self.price,
-            skus: self.skus,
-            
-            amountToAddToBag: amountToAddToBag ?? self.amountToAddToBag,
-            addToBagState: addToBagState ?? self.addToBagState,
-            selectedColor: selectedColor.value(from: self.selectedColor),
-            selectedSize: selectedSize.value(from: self.selectedSize),
-            selectedSKU: selectedSKU.value(from: self.selectedSKU)
+            productID: product.id,
+            productName: product.name,
+            price: product.price,
+            skus: product.skus,
+            amountToAddToBag: 0,
+            addToBagState: .add,
+            selectedColor: nil,
+            selectedSize: nil,
+            selectedSKU: nil
         )
     }
 }
@@ -58,143 +45,86 @@ enum PDPBusinessLogicError: Error {
     case exceededAmountThatCanBeAddedToBag
 }
 
-// NOTE: Could be made generic
-enum PDPBusinessLogicState {
+enum PDPStateResult {
     case success(PDPState)
     case error(PDPBusinessLogicError)
 }
 
-// NOTE: Could be made generic/abstract
-enum PDPBusinessLogicStatus {
-    case inProgress
-    // The above case could also look something like this:
-    // `case inProgress(amountComplete: Double)`
-    case complete
+protocol PDPBusinessLogic {
+    var state: PDPState { get }
+    var productID: ProductID { get }
+    var selectedSKUID: SKUID? { get }
+    
+    func addOneMoreToPurchase() -> PDPStateResult
+    func removeOneFromPurchase() -> PDPStateResult
+    func selectSKUSize(_ size: SKUSize) -> PDPStateResult
+    func selectSKUColor(_ color: SKUColor) -> PDPStateResult
+    func addSKUToBag() -> PDPStateResult
+    func addingSKUToBag() -> PDPStateResult
+    func addedSKUToBag() -> PDPStateResult
 }
 
-// NOTE: Could be made generic
-typealias PDPBusinessLogicStatusCallback = (PDPBusinessLogicStatus, PDPBusinessLogicState) -> ()
-
-/**
- Manufactures `PDPBusinessLogic` with its respective dependencies.
- 
- The `Product`/`PDPState` will not be known until run-time and, therefore, can not be provided at assembly time.
- */
-class PDPBusinessLogicFactory {
+extension PDPState: PDPBusinessLogic {
     
-    private let bagService: BagService
-    
-    init(bagService: BagService) {
-        self.bagService = bagService
+    var state: PDPState {
+        return self
     }
     
-    func makeWithProduct(_ product: Product) -> PDPBusinessLogic {
-        return PDPBusinessLogic(bagService: bagService, product: product)
+    var selectedSKUID: SKUID? {
+        return selectedSKU?.id
     }
     
-    func makeWithState(_ state: PDPState) -> PDPBusinessLogic {
-        return PDPBusinessLogic(bagService: bagService, state: state)
-    }
-}
-
-class PDPBusinessLogic {
-    
-    var productID: ProductID {
-        return state.productID
-    }
-
-    private var selectedSKUID: SKUID? {
-        return state.selectedSKU?.id
-    }
-
-    private let bagService: BagService
-    private(set) var state: PDPState
-    
-    init(bagService: BagService, product: Product) {
-        self.bagService = bagService
-        self.state = PDPState(
-            productID: product.id,
-            productName: product.name,
-            price: product.price,
-            skus: product.skus,
-            amountToAddToBag: 1,
-            addToBagState: .add,
-            selectedColor: nil,
-            selectedSize: nil,
-            selectedSKU: nil
-        )
-    }
-    
-    init(bagService: BagService, state: PDPState) {
-        self.bagService = bagService
-        self.state = state
-    }
-    
-    func addOneMoreToPurchase() -> PDPBusinessLogicState {
-        let amount = state.amountToAddToBag + 1
+    func addOneMoreToPurchase() -> PDPStateResult {
+        let amount = amountToAddToBag + 1
         guard amount < 100 else {
             return .error(.exceededAmountThatCanBeAddedToBag)
         }
         
-        state = state.make(amountToAddToBag: amount)
-        return .success(state)
+        return .success(make(amountToAddToBag: amount))
     }
     
-    func removeOneFromPurchase() -> PDPBusinessLogicState {
-        let amount = state.amountToAddToBag - 1
+    func removeOneFromPurchase() -> PDPStateResult {
+        let amount = amountToAddToBag - 1
         guard amount > 0 else {
-            return .success(state)
+            return .success(self)
         }
         
-        state = state.make(amountToAddToBag: amount)
-        return .success(state)
+        return .success(make(amountToAddToBag: amount))
     }
     
-    func selectSKUColor(_ color: SKUColor) -> PDPBusinessLogicState {
-        let selectedSKU: SKU? = skuFor(color: color, size: state.selectedSize)
-        self.state = state.make(selectedColor: .set(color), selectedSKU: .set(selectedSKU))
-        return .success(state)
+    func selectSKUSize(_ size: SKUSize) -> PDPStateResult {
+        let selectedSKU: SKU? = skuFor(color: selectedColor, size: size)
+        return .success(make(selectedSize: .set(size), selectedSKU: .set(selectedSKU)))
     }
     
-    func selectSKUSize(_ size: SKUSize) -> PDPBusinessLogicState {
-        let selectedSKU: SKU? = skuFor(color: state.selectedColor, size: size)
-        self.state = state.make(selectedSize: .set(size), selectedSKU: .set(selectedSKU))
-        return .success(state)
+    func selectSKUColor(_ color: SKUColor) -> PDPStateResult {
+        let selectedSKU: SKU? = skuFor(color: color, size: selectedSize)
+        return .success(make(selectedColor: .set(color), selectedSKU: .set(selectedSKU)))
     }
     
-    func addSKUToBag(_ callback: @escaping PDPBusinessLogicStatusCallback) throws {
-        guard .adding != state.addToBagState else {
-            throw PDPBusinessLogicError.operationInProgress
+    func addSKUToBag() -> PDPStateResult {
+        return .success(make(addToBagState: .add))
+    }
+    
+    func addingSKUToBag() -> PDPStateResult {
+        guard .adding != addToBagState else {
+            return .error(.operationInProgress)
         }
-        guard let skuID = selectedSKUID else {
-            return callback(.complete, .error(.skuIsNotSelected))
+        guard selectedSKUID != nil else {
+            return .error(.skuIsNotSelected)
         }
         
-        state = state.make(addToBagState: .adding)
-        callback(.inProgress, .success(state))
-        
-        bagService.addToBag(skuID: skuID)
-            .onSuccess { [weak self] _ in
-                guard let strongSelf = self else {
-                    return
-                }
-                strongSelf.state = strongSelf.state.make(addToBagState: .added)
-                callback(.complete, .success(strongSelf.state))
-            }
-            .onFailure { [weak self] _ in
-                guard let strongSelf = self else {
-                    return
-                }
-                strongSelf.state = strongSelf.state.make(addToBagState: .add)
-                callback(.inProgress, .success(strongSelf.state))
-                callback(.complete, .error(.failedToAddSKUToBag))
-        }
+        return .success(make(addToBagState: .adding))
+    }
+    
+    func addedSKUToBag() -> PDPStateResult {
+        return .success(make(addToBagState: .added))
     }
     
     // MARK: - Private methods
     
     private func skuFor(color: SKUColor?, size: SKUSize?) -> SKU? {
-        return state.skus.first(where: { (sku) -> Bool in
+        return skus.first(where: { (sku) -> Bool in
             return sku.color == color && sku.size == size
         })
     }

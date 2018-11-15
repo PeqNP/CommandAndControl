@@ -15,67 +15,59 @@ class PDPBusinessLogicSpec: QuickSpec {
     override func spec() {
         
         describe("Given a PDPBusinessLogic") {
-            var subject: PDPBusinessLogic!
-            var bagService: FakeBagService!
-            var product: Product!
+            var subject: PDPState!
+            var factory: PDPBusinessLogicFactory!
+
+            var state: PDPStateResult!
 
             beforeEach {
-                bagService = FakeBagService()
-            }
-        
-            describe("default values") {
-                beforeEach {
-                    product = Product.testMake(id: 1)
-                    subject = PDPBusinessLogic(bagService: bagService, product: product)
-                }
-                
-                it("should return the correct ProductID") {
-                    expect(subject.productID).to(equal(product.id))
-                }
-                
-                it("should set the initial state correctly") {
-                    let expectedState = PDPState(
-                        productID: product.id,
-                        productName: product.name,
-                        price: product.price,
-                        skus: product.skus,
-                        amountToAddToBag: 1,
-                        addToBagState: .add,
-                        selectedColor: nil,
-                        selectedSize: nil,
-                        selectedSKU: nil
-                    )
-                    expect(subject.state).to(equal(expectedState))
-                }
+                factory = PDPBusinessLogicFactory()
             }
             
-            // MARK: A generic example of how to test the state machine
+            describe("initializing") {
+                
+                var product: Product!
+
+                beforeEach {
+                    product = Product.testMake(id: 1, name: "Shoes" /* TODO: price, skus */)
+                    subject = factory.makeFromProduct(product).state
+                }
+                
+                it("should have set the default values") {
+                    expect(subject.productID).to(equal(product.id))
+                    expect(subject.productName).to(equal(product.name))
+                    expect(subject.price).to(equal(product.price))
+                    expect(subject.skus).to(equal(product.skus))
+                    
+                    expect(subject.amountToAddToBag).to(equal(0))
+                    expect(subject.addToBagState).to(equal(AddToBagState.add))
+                    expect(subject.selectedColor).to(beNil())
+                    expect(subject.selectedSize).to(beNil())
+                    expect(subject.selectedSKU).to(beNil())
+                }
+            }
             
             describe("increasing the amount to purchase") {
-                var state: PDPBusinessLogicState!
-                var expectedState: PDPBusinessLogicState!
-                
                 context("when adding one more within limit") {
                     beforeEach {
-                        product = Product.testMake(id: 1)
-                        subject = PDPBusinessLogic(bagService: bagService, product: product)
-                        expectedState = .success(subject.state.make(amountToAddToBag: 2))
+                        subject = PDPState.testMake(amountToAddToBag: 1)
                         state = subject.addOneMoreToPurchase()
                     }
                     
                     it("should have added one more to the bag") {
+                        let expectedState: PDPStateResult = .success(subject.make(amountToAddToBag: 2))
                         expect(state).to(equal(expectedState))
                     }
                 }
                 
                 context("when adding one more than is allowed") {
                     beforeEach {
-                        subject = PDPBusinessLogic(bagService: bagService, state: PDPState.testMake(amountToAddToBag: 99))
+                        subject = PDPState.testMake(amountToAddToBag: 99)
                         state = subject.addOneMoreToPurchase()
                     }
                     
-                    it("should have added one more to the bag") {
-                        expectedState = .error(.exceededAmountThatCanBeAddedToBag)
+                    it("should have thrown an error and changed no state") {
+                        let expectedState: PDPStateResult = .error(.exceededAmountThatCanBeAddedToBag)
                         expect(state).to(equal(expectedState))
                     }
                 }
@@ -84,86 +76,7 @@ class PDPBusinessLogicSpec: QuickSpec {
             // MARK: An example of how a service can be tested
             
             describe("adding a sku to the bag") {
-                var status: PDPBusinessLogicStatus!
-                var state: PDPBusinessLogicState!
-                var expectedState: PDPBusinessLogicState!
-                var expectedError: PDPBusinessLogicError?
-                var promise: Promise<IgnorableResult, BagServiceError>!
-                
-                beforeEach {
-                    expectedError = nil
-                    promise = Promise<IgnorableResult, BagServiceError>()
-                    
-                    bagService.stub(.addToBag).with(SKUID(2)).andReturn(promise.future)
-                    product = Product.testMake(id: 1, skus: [
-                        SKU.testMake(id: 2, color: SKUColor.testMake(name: "Red"), size: SKUSize.testMake(name: "Large"))
-                    ])
-                    subject = PDPBusinessLogic(bagService: bagService, product: product)
 
-                    _ = subject.selectSKUSize(SKUSize(name: "Large", metaDescription: nil))
-                    _ = subject.selectSKUColor(SKUColor(name: "Red", imageURL: nil))
-                }
-                
-                let subjectAction = {
-                    do {
-                        try subject.addSKUToBag { (statusArg, stateArg) in
-                            status = statusArg
-                            state = stateArg
-                        }
-                    } catch {
-                        expectedError = error as? PDPBusinessLogicError
-                    }
-                }
-                
-                context("when the process starts") {
-                    beforeEach {
-                        expectedState = .success(subject.state.make(addToBagState: .adding))
-                        subjectAction()
-                    }
-                    
-                    it("should have returned the correct state and status") {
-                        expect(status).to(equal(PDPBusinessLogicStatus.inProgress))
-                        expect(state).to(equal(expectedState))
-                    }
-                }
-                
-                context("when the process succeeds") {
-                    beforeEach {
-                        expectedState = .success(subject.state.make(addToBagState: .added))
-                        promise.success(IgnorableResult())
-                        subjectAction()
-                        expect(promise.future.value).toEventuallyNot(beNil())
-                    }
-                    
-                    it("should have returned the correct state and status") {
-                        expect(status).to(equal(PDPBusinessLogicStatus.complete))
-                        expect(state).to(equal(expectedState))
-                    }
-                }
-                
-                context("when the process fails") {
-                    beforeEach {
-                        promise.failure(.generic)
-                        subjectAction()
-                        expect(promise.future.error).toEventuallyNot(beNil())
-                    }
-                    
-                    it("should have returned the correct state and status") {
-                        expect(status).to(equal(PDPBusinessLogicStatus.complete))
-                        expect(state).to(equal(PDPBusinessLogicState.error(.failedToAddSKUToBag)))
-                    }
-                }
-
-                context("when attempting to add to the bag more than once") {
-                    beforeEach {
-                        subjectAction()
-                        subjectAction()
-                    }
-                    
-                    it("should have returned the correct state and status") {
-                        expect(expectedError).to(equal(PDPBusinessLogicError.operationInProgress))
-                    }
-                }
             }
         }
         

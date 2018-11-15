@@ -1,4 +1,3 @@
-import BrightFutures
 import Foundation
 import Spry
 
@@ -11,14 +10,10 @@ class FakePDPBusinessLogicFactory: PDPBusinessLogicFactory, Spryable {
     }
     
     enum Function: String, StringRepresentable {
-        case makeWithProduct = "makeWithProduct"
+        case makeFromProduct = "makeFromProduct"
     }
     
-    init() {
-        super.init(bagService: FakeBagService())
-    }
-    
-    override func makeWithProduct(_ product: Product) -> PDPBusinessLogic {
+    override func makeFromProduct(_ product: Product) -> PDPBusinessLogic {
         return spryify(arguments: product)
     }
 }

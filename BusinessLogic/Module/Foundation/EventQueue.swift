@@ -17,17 +17,17 @@ class EventQueue {
     
     private var queue: [Any] = [Any]()
     
-    func add(_ callback: SyncCallback) -> EventQueue {
+    func add(_ callback: @escaping SyncCallback) -> EventQueue {
         queue.append(callback)
         return self
     }
     
-    func add(_ callback: FutureCallback) -> EventQueue {
+    func add(_ callback: @escaping FutureCallback) -> EventQueue {
         queue.append(callback)
         return self
     }
     
-    func add(_ callback: AsyncCallback) -> EventQueue {
+    func add(_ callback: @escaping AsyncCallback) -> EventQueue {
         queue.append(callback)
         return self
     }

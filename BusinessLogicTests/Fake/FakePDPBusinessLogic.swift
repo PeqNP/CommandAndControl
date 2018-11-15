@@ -10,53 +10,61 @@ class FakePDPBusinessLogic: PDPBusinessLogic, Spryable {
     }
     
     enum Function: String, StringRepresentable {
+        case state = "state"
         case productID = "productID"
+        case selectedSKUID = "selectedSKUID"
         case addOneMoreToPurchase = "addOneMoreToPurchase()"
+        case removeOneFromPurchase = "removeOneFromPurchase()"
         case selectSKUSize = "selectSKUSize"
         case selectSKUColor = "selectSKUColor"
-        case addSKUToBag = "addSKUToBag"
-    }
-
-    let _bagService: BagService
-    var _state: PDPState? = nil
-    var _product: Product? = nil
-    
-    init() {
-        self._bagService = FakeBagService()
-        super.init(bagService: _bagService, state: PDPState.testMake())
+        case addSKUToBag = "addSKUToBag()"
+        case addingSKUToBag = "addingSKUToBag()"
+        case addedSKUToBag = "addedSKUToBag()"
     }
     
-    override var productID: ProductID {
+    var state: PDPState {
         get {
             return stubbedValue()
         }
     }
     
-    override init(bagService: BagService, state: PDPState) {
-        self._bagService = bagService
-        self._state = state
-        super.init(bagService: bagService, state: state)
+    var selectedSKUID: SKUID? {
+        get {
+            return stubbedValue()
+        }
     }
     
-    override init(bagService: BagService, product: Product) {
-        self._bagService = bagService
-        self._product = product
-        super.init(bagService: bagService, product: product)
+    var productID: ProductID {
+        get {
+            return stubbedValue()
+        }
     }
     
-    override func addOneMoreToPurchase() -> PDPBusinessLogicState {
+    func addOneMoreToPurchase() -> PDPStateResult {
         return spryify()
     }
     
-    override func selectSKUSize(_ size: SKUSize) -> PDPBusinessLogicState {
+    func selectSKUSize(_ size: SKUSize) -> PDPStateResult {
         return spryify(arguments: size)
     }
     
-    override func selectSKUColor(_ color: SKUColor) -> PDPBusinessLogicState {
+    func selectSKUColor(_ color: SKUColor) -> PDPStateResult {
         return spryify(arguments: color)
     }
     
-    override func addSKUToBag(_ callback: @escaping PDPBusinessLogicStatusCallback) throws {
-        return try spryifyThrows(arguments: callback)
+    func addSKUToBag() -> PDPStateResult {
+        return spryify()
+    }
+    
+    func removeOneFromPurchase() -> PDPStateResult {
+        return spryify()
+    }
+    
+    func addingSKUToBag() -> PDPStateResult {
+        return spryify()
+    }
+    
+    func addedSKUToBag() -> PDPStateResult {
+        return spryify()
     }
 }
