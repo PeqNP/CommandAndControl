@@ -2,7 +2,7 @@
 
 A pattern that shows the separation of concerns between a view (controller), orchestrator, state, services, and view states.
 
-Each layer described above is necessary only in certain contexts. For instance,
+Each component described above is not necessary in every context. For instance,
 1. a view controller may not need an orchestrator if it is only displaying static content
 2. an orchestrator may not need to have state if the service manages the state
 3. an orchestrator may not need a view state factory if there is no conditional logic to create a view state, etc.
