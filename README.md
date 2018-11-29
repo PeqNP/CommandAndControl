@@ -34,15 +34,15 @@ Notes:
 ## Example
 
 A user taps the "Add to Bag" button in the view controller. The view controller would:
-1. emit a `addToBag` signal to the orchestrator (the `CommandAndControl` class)
+1. emit an `addToBag` signal to the orchestrator (the `CommandAndControl` class)
 2. the orchestrator makes a service call to add the item to the bag
 3. once a response is returned it then updates the state with the current quantity in the bag
-4. generates a new view state using the view state factory
+4. generates a new view state, from the state, using the view state factory
 5. sends the new view state to the view controller
 
 ## Reasoning
 
-Almost every event library/pattern requires the consumer to follow a rigid set of rules for every context. One could argue that it provides consistency to the app. However, it also introduces unnecessary complexity. This pattern provides a way to use only the components desired for a given context. It also doesn't say how signals are sent to/from each of the layers/components. You could use Rx, delegation, Futures, etc. The most important thing this example tries to illustrate is defining the separation of concerns.
+Almost every event library/pattern requires the consumer to follow a rigid set of rules for every context. One could argue that it provides consistency to the app. However, it also introduces unnecessary complexity. This pattern provides a way to use only the components desired for a given context. It also doesn't say how signals are sent to/from each of the layers/components. You could use Rx, delegation, futures, etc.
 
 Another important aspect of this design is that each component can be tested in isolation. Please review each of the specs to get an idea of how each component can be tested.
 
@@ -50,8 +50,8 @@ Another important aspect of this design is that each component can be tested in 
 
 This design applies liberal use of single responsibility and encapsulation.
 
-This idea could be taken further by using dependency inversion where consumers would define the interface it requires in order to perform its job. For example, the `ViewController` could create a `protocol` called `ViewControllerProvider` which defines the signals it wishes to send, how it recieves responses from the provider, as well as how it wishes the data to be shaped. The beneftis of this are:
+This idea could be taken further by using dependency inversion where consumers would define the interface it requires in order to perform its job. For example, the `ViewController` could create a `protocol` called `ViewControllerProvider` which defines the signals it wishes to send, how it recieves responses from the provider, as well as how it wishes the data to be shaped. The benefits of this are:
 
-1. each individual component can be worked on in-tandem. Where the UI could be worked on idependently from the `Orchestrator`, the `Service`, or even the `State` (`BusinessLogic` protocol).
-2. pushes complexity of data shaping, etc. as close to the service layer as possible, as each successive layer in the stack requires a given provider to give it the data in the shape it requires.
-3. helps define the responsibility of a component further up the stream. When you develop a service without knowing what the consumer wants, often times your assumptions as to what they want could be wrong -- which may require rework at integration time.
+1. each individual component can be worked on in-tandem. Where the UI could be worked on independently from the `Orchestrator`, `Service`, or even the `State` (`BusinessLogic` protocol).
+2. pushes complexity of data shaping, etc. as close to the service layer as possible, as each successive layer in the stack requires a given provider to give it the data in the shape it wants.
+3. helps define the responsibility of a component further up the stream. When you develop a service without knowing what the consumer wants, often times your assumptions as to what they need may be wrong. This translates into more rework at integration time.
