@@ -103,13 +103,13 @@ class PDPCommandAndControl {
     // MARK: Events
     
     private func selectedSKUSize(_ size: SKUSize) {
-        let state = self.state.selectSKUSize(size)
-        update(with: state)
+        let result = state.selectSKUSize(size)
+        update(with: result)
     }
     
     private func selectedSKUColor(_ color: SKUColor) {
-        let state = self.state.selectSKUColor(color)
-        update(with: state)
+        let result = state.selectSKUColor(color)
+        update(with: result)
     }
     
     private func tappedMoreInfoButton() {
@@ -138,12 +138,12 @@ class PDPCommandAndControl {
     }
     
     private func addOneTapped() {
-        let result = self.state.addOneMoreToPurchase()
+        let result = state.addOneMoreToPurchase()
         update(with: result)
     }
     
     private func removeOneTapped() {
-        let result = self.state.removeOneFromPurchase()
+        let result = state.removeOneFromPurchase()
         update(with: result)
     }
     
@@ -192,7 +192,7 @@ class PDPCommandAndControl {
      Add the selected SKU to the shopper's bag.
      */
     private func addSKUToBag() -> QueueableFuture? {
-        let result = self.state.addSKUToBag()
+        let result = state.addSKUToBag()
         guard case .success = result else {
             update(with: result)
             return nil
@@ -217,12 +217,12 @@ class PDPCommandAndControl {
     }
     
     private func addedSKUToBag() {
-        let result = self.state.addedSKUToBag()
+        let result = state.addedSKUToBag()
         update(with: result)
     }
     
     private func resetAddToBagState() {
-        let result = self.state.resetAddSKUToBag()
+        let result = state.resetAddSKUToBag()
         update(with: result)
     }
     
