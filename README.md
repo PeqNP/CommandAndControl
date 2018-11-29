@@ -13,6 +13,7 @@ This project illustrates how each component fits together. However, depending on
 
 The dependency graph for each component is as follows:
 
+```
     +-----------+
     |  Service  |
     +-----------+
@@ -25,6 +26,7 @@ The dependency graph for each component is as follows:
     +------------------+                         |
     |  ViewController  |  <----------------------+
     +------------------+
+```
 
 Notes:
 - An `Orchestrator` (currently the `CommandAndControl` class in this project) is a dependency of the `ViewController`
