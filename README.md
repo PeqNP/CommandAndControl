@@ -1,4 +1,4 @@
-# Simplified Event Pattern
+# Simple Event Pattern
 
 A pattern that shows the separation of concerns between a view (controller), orchestrator, state, services, and view states.
 
