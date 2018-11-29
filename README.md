@@ -22,7 +22,6 @@ The dependency graph for each component is as follows:
     |  Orchestrator  | > |  State  | > |  ViewStateFactory  |
     +----------------+   +---------+   +--------------------+
             ^                                    |
-            |                                    |
     +------------------+                         |
     |  ViewController  |  <----------------------+
     +------------------+
