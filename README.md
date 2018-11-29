@@ -40,13 +40,13 @@ A user taps the "Add to Bag" button in the view controller. The view controller 
 4. generates a new view state, from the state, using the view state factory
 5. sends the new view state to the view controller
 
-## Reasoning
+## Why Did You Do This?
 
 Almost every event library/pattern requires the consumer to follow a rigid set of rules for every context. One could argue that it provides consistency to the app. However, it also introduces unnecessary complexity. This pattern provides a way to use only the components desired for a given context. It also doesn't say how signals are sent to/from each of the layers/components. You could use Rx, delegation, futures, etc.
 
 Another important aspect of this design is that each component can be tested in isolation. Please review each of the specs to get an idea of how each component can be tested.
 
-## Other Notes
+## Notes
 
 This design applies liberal use of single responsibility and encapsulation.
 
