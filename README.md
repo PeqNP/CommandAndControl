@@ -7,8 +7,6 @@ Each component described above is not necessary in every context. For instance,
 2. an orchestrator may not need to have state if the service manages the state
 3. an orchestrator may not need a view state factory if there is no conditional logic to create a view state, etc.
 
-This project illustrates how each component fits together. However, depending on the context, not every component may be necessary.
-
 ## Overview
 
 The dependency graph for each component is as follows:
