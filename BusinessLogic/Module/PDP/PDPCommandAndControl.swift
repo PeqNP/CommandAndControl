@@ -51,7 +51,7 @@ protocol PDPCommandAndControlDelegate: class {
 class PDPCommandAndControl {
     
     private let queue: EventQueue = EventQueue()
-    private var state: PDPBusinessLogic!
+    private var businessLogic: PDPBusinessLogic!
 
     private let processQueue: ProcessQueue
     private let bagService: BagService
@@ -74,7 +74,7 @@ class PDPCommandAndControl {
     func receive(_ event: PDPEvent) {
         switch event {
         case .configure(let product):
-            state = logicFactory.makeFromProduct(product)
+            businessLogic = logicFactory.makeFromProduct(product)
         case .viewDidLoad:
             break
         case .selectedSKUSize(let size):
@@ -103,12 +103,12 @@ class PDPCommandAndControl {
     // MARK: Events
     
     private func selectedSKUSize(_ size: SKUSize) {
-        let result = state.selectSKUSize(size)
+        let result = businessLogic.selectSKUSize(size)
         update(with: result)
     }
     
     private func selectedSKUColor(_ color: SKUColor) {
-        let result = state.selectSKUColor(color)
+        let result = businessLogic.selectSKUColor(color)
         update(with: result)
     }
     
@@ -138,12 +138,12 @@ class PDPCommandAndControl {
     }
     
     private func addOneTapped() {
-        let result = state.addOneMoreToPurchase()
+        let result = businessLogic.addOneMoreToPurchase()
         update(with: result)
     }
     
     private func removeOneTapped() {
-        let result = state.removeOneFromPurchase()
+        let result = businessLogic.removeOneFromPurchase()
         update(with: result)
     }
     
@@ -178,7 +178,7 @@ class PDPCommandAndControl {
      This method shows how an event unrelated to the main `PDPState` can be handled. You could potentially have a `ShippingInfoBusinessLogic` but that's unnecessary as the operation is so simple.
      */
     private func loadShippingInformation() -> QueueableFuture? {
-        return shippingService.shippingInformationFor(productID: state.productID)
+        return shippingService.shippingInformationFor(productID: businessLogic.productID)
             .onSuccess { [weak self] (shippingInfo) in
                 self?.showShippingInfo(shippingInfo)
             }
@@ -192,12 +192,12 @@ class PDPCommandAndControl {
      Add the selected SKU to the shopper's bag.
      */
     private func addSKUToBag() -> QueueableFuture? {
-        let result = state.addSKUToBag()
+        let result = businessLogic.addSKUToBag()
         guard case .success = result else {
             update(with: result)
             return nil
         }
-        guard let skuID = state.selectedSKUID else {
+        guard let skuID = businessLogic.selectedSKUID else {
             return nil
         }
         
@@ -217,12 +217,12 @@ class PDPCommandAndControl {
     }
     
     private func addedSKUToBag() {
-        let result = state.addedSKUToBag()
+        let result = businessLogic.addedSKUToBag()
         update(with: result)
     }
     
     private func resetAddToBagState() {
-        let result = state.resetAddSKUToBag()
+        let result = businessLogic.resetAddSKUToBag()
         update(with: result)
     }
     
@@ -243,7 +243,7 @@ class PDPCommandAndControl {
     private func update(with result: PDPStateResult) {
         switch result {
         case .success(let state):
-            self.state = state
+            self.businessLogic = state
             let viewState = viewStateFactory.makePDPViewStateFrom(state: state)
             delegate?.command(.update(viewState))
         case .error(let error):
