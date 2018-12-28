@@ -34,7 +34,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        control.receive(.viewDidLoad)
+        control.receive(.viewDidLoad)
     }
     
     private func update(_ viewState: PDPViewState) {

@@ -5,6 +5,7 @@ use_frameworks!
 target 'BusinessLogic' do
     pod 'BrightFutures'
     pod 'Swinject'
+    pod 'SwinjectStoryboard'
 end
 
 target 'BusinessLogicTests' do

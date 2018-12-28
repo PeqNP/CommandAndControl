@@ -37,6 +37,7 @@
 		07951D6010667EEFC110E0A3 /* Pods_BusinessLogicTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4659C84CD58ACC8EF037371 /* Pods_BusinessLogicTests.framework */; };
 		079C478920C0B3480040B9DC /* BagService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079C478820C0B3480040B9DC /* BagService.swift */; };
 		079C478B20C0B36C0040B9DC /* IgnorableResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079C478A20C0B36C0040B9DC /* IgnorableResult.swift */; };
+		07EC61EC21D6E67100FE283C /* Assembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07EC61EB21D6E67100FE283C /* Assembly.swift */; };
 		07F821B920BE1CE900EF9B74 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F821B820BE1CE900EF9B74 /* Product.swift */; };
 		07F821BF20BE1DD100EF9B74 /* ShippingInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F821BE20BE1DD100EF9B74 /* ShippingInfo.swift */; };
 		07F94C8A219DB9BD00DB5761 /* PDPState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F94C89219DB9BD00DB5761 /* PDPState.swift */; };
@@ -94,6 +95,7 @@
 		0760054A20BE18E40006CCF8 /* ShippingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShippingService.swift; sourceTree = "<group>"; };
 		079C478820C0B3480040B9DC /* BagService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BagService.swift; sourceTree = "<group>"; };
 		079C478A20C0B36C0040B9DC /* IgnorableResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnorableResult.swift; sourceTree = "<group>"; };
+		07EC61EB21D6E67100FE283C /* Assembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assembly.swift; sourceTree = "<group>"; };
 		07F821B820BE1CE900EF9B74 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		07F821BE20BE1DD100EF9B74 /* ShippingInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShippingInfo.swift; sourceTree = "<group>"; };
 		07F94C89219DB9BD00DB5761 /* PDPState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDPState.swift; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 			children = (
 				07F821BB20BE1D4E00EF9B74 /* Module */,
 				0760051220BDC0980006CCF8 /* AppDelegate.swift */,
+				07EC61EB21D6E67100FE283C /* Assembly.swift */,
 				0760051420BDC0980006CCF8 /* ViewController.swift */,
 				0760051620BDC0980006CCF8 /* Main.storyboard */,
 				0760051920BDC09D0006CCF8 /* Assets.xcassets */,
@@ -448,12 +451,14 @@
 				"${BUILT_PRODUCTS_DIR}/BrightFutures/BrightFutures.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${BUILT_PRODUCTS_DIR}/Swinject/Swinject.framework",
+				"${BUILT_PRODUCTS_DIR}/SwinjectStoryboard/SwinjectStoryboard.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BrightFutures.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Swinject.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwinjectStoryboard.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -544,6 +549,7 @@
 				0760054B20BE18E40006CCF8 /* ShippingService.swift in Sources */,
 				0760051520BDC0980006CCF8 /* ViewController.swift in Sources */,
 				0760054720BDCFCB0006CCF8 /* Types.swift in Sources */,
+				07EC61EC21D6E67100FE283C /* Assembly.swift in Sources */,
 				074F3D2C20C0C6AC00784754 /* EventQueue.swift in Sources */,
 				079C478920C0B3480040B9DC /* BagService.swift in Sources */,
 				0760054120BDC2BB0006CCF8 /* PDPBusinessLogic.swift in Sources */,
